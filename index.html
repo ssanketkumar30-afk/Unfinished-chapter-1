@@ -14,7 +14,7 @@
     <span class="intro-badge">System Awakening</span>
     <h1 class="intro-title" id="intro-glow-title">UNFINISHED CHAPTER</h1>
     <p class="intro-subtitle">"Not the end of the story, just the beginning of the grind."</p>
-    <button class="intro-btn" onclick="enterRealm()">Awaken Digital Realm ✦</button>
+    <button type="button" class="intro-btn" id="intro-btn" onclick="enterRealm()">Awaken Digital Realm ✦</button>
   </div>
 
   <!-- 2. VISITOR GATE (PASSWORD PROTECTION) -->
@@ -24,13 +24,13 @@
       <h3 style="font-family: 'Outfit', sans-serif; letter-spacing: 2px; color: var(--glow-cyan);">UNFINISHED CHAPTER</h3>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">This digital space is locked. Enter the passkey to enter.</p>
       <input type="password" id="gate-pass-input" placeholder="Enter Access Code..." />
-      <button class="btn-glow" style="width: 100%; justify-content: center;" onclick="verifyGatePass()">Unlock Realm →</button>
+      <button class="btn-glow" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="verifyGatePass()">Unlock Realm →</button>
       <p id="gate-err" style="color: #ef4444; font-size: 0.8rem; margin-top: 0.8rem; display: none;">Invalid passkey. Access denied.</p>
     </div>
   </div>
 
-  <!-- 3. FLOATING MUSIC PLAYER (CORNER WIDGET) -->
-  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 10, 18, 0.85); border: 1px solid var(--border-neon); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
+  <!-- 3. FLOATING MUSIC PLAYER -->
+  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 10, 18, 0.9); border: 1px solid var(--border-neon); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
     <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: var(--glow-cyan); font-size: 1.2rem; cursor: pointer;">▶</button>
     <div style="display: flex; flex-direction: column;">
       <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">No track loaded</span>
@@ -166,9 +166,7 @@
           <p class="sec-sub" id="journey-desc">From zero to something...</p>
 
           <div class="journey-banner">
-            <div class="journey-track-2" id="journey-node-container">
-              <!-- Loaded from Supabase -->
-            </div>
+            <div class="journey-track-2" id="journey-node-container"></div>
           </div>
         </section>
 
@@ -183,9 +181,7 @@
                 <span style="font-size: 0.75rem; color: var(--glow-cyan);">Public</span>
               </div>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Small steps, big dreams.</p>
-              <div id="projects-list-container">
-                <!-- Projects from database -->
-              </div>
+              <div id="projects-list-container"></div>
             </div>
 
             <!-- MY WRITINGS -->
@@ -195,9 +191,7 @@
                 <span style="font-size: 0.75rem; color: var(--glow-cyan);">Thoughts</span>
               </div>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Thoughts, feelings, & random ideas.</p>
-              <div id="writings-list-container">
-                <!-- Writings from database (only what you post!) -->
-              </div>
+              <div id="writings-list-container"></div>
             </div>
 
           </div>
@@ -211,9 +205,7 @@
           </div>
 
           <div class="goals-banner">
-            <div id="goals-list-container">
-              <!-- Goals loaded dynamically -->
-            </div>
+            <div id="goals-list-container"></div>
             <div style="text-align: right; position: relative;">
               <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; line-height: 1.4;" id="goals-quote">
                 “I'm not chasing success, I'm chasing the version of myself that I'll be proud to look back at.”
@@ -226,9 +218,7 @@
         </section>
 
         <!-- DYNAMIC CUSTOM SECTIONS CONTAINER -->
-        <div id="custom-sections-wrapper">
-          <!-- Any new headings/titles added by you will appear here automatically! -->
-        </div>
+        <div id="custom-sections-wrapper"></div>
 
         <!-- FOOTER -->
         <footer style="padding: 2.5rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
@@ -240,7 +230,7 @@
     </main>
   </div>
 
-  <!-- SCRIPT ENGINE (SUPABASE REAL-TIME + INTERACTIONS) -->
+  <!-- SCRIPT ENGINE -->
   <script>
     const SUPABASE_URL = "https://xuxwfgrygacqfivvavwk.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eHdmZ3J5Z2FjcWZpdnZhdndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0Mjk3OTMsImV4cCI6MjA4OTAwNTc5M30.6i0v9xMh_vT15L2JvU8tN5l-1dCskkH8-5W0tQOQ9k8";
@@ -253,17 +243,20 @@
     // 1. WELCOME INTRO & ACCESS GATE
     function enterRealm() {
       const intro = document.getElementById("welcome-intro");
-      intro.style.opacity = "0";
-      setTimeout(() => {
-        intro.style.visibility = "hidden";
-        checkAccessGate();
-      }, 800);
+      if (intro) {
+        intro.classList.add("fade-out");
+        setTimeout(() => {
+          intro.style.display = "none";
+          checkAccessGate();
+        }, 600);
+      }
     }
 
     function checkAccessGate() {
       const unlocked = sessionStorage.getItem("chapter_unlocked");
-      if (!unlocked) {
-        document.getElementById("visitor-gate").style.display = "flex";
+      const gate = document.getElementById("visitor-gate");
+      if (!unlocked && gate) {
+        gate.style.display = "flex";
       }
     }
 
@@ -288,41 +281,48 @@
       setTimeout(() => spark.remove(), 700);
     }
 
-    window.addEventListener("pointerdown", (e) => createSpark(e.clientX, e.clientY));
-    window.addEventListener("touchmove", (e) => {
-      if (e.touches.length > 0) createSpark(e.touches[0].clientX, e.touches[0].clientY);
+    window.addEventListener("pointerdown", (e) => {
+      if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+        createSpark(e.clientX, e.clientY);
+      }
     });
 
     // 3. FETCH SITE CONTENT & REALTIME SYNC
     async function initSite() {
+      // Direct Event Binding for Intro Button
+      const btn = document.getElementById("intro-btn");
+      if (btn) {
+        btn.onclick = enterRealm;
+      }
+
       // Settings
       const { data: set } = await supabase.from('site_settings').select('*').single();
       if (set) {
         siteSettings = set;
         document.getElementById("intro-glow-title").innerText = set.site_title || "UNFINISHED CHAPTER";
         document.getElementById("sidebar-title").innerText = set.site_title || "UNFINISHED CHAPTER";
-        document.getElementById("hero-greeting").innerText = set.hero_greeting;
-        document.getElementById("hero-name").innerText = set.hero_name;
-        document.getElementById("hero-subtag").innerText = set.hero_subtag;
-        document.getElementById("hero-desc").innerText = set.hero_desc;
-        document.getElementById("hero-cursive").innerText = set.hero_cursive;
-        document.getElementById("hero-quote").innerText = set.hero_quote;
-        document.getElementById("hero-quote-author").innerText = set.hero_quote_author;
-        document.getElementById("about-desc").innerText = set.about_desc;
-        document.getElementById("about-quote").innerText = set.about_quote;
-        document.getElementById("about-subquote").innerText = set.about_subquote;
-        document.getElementById("info-age").innerText = set.age_val;
-        document.getElementById("info-age-sub").innerText = set.age_sub;
-        document.getElementById("info-edu").innerText = set.edu_val;
-        document.getElementById("info-edu-sub").innerText = set.edu_sub;
-        document.getElementById("info-home").innerText = set.home_val;
-        document.getElementById("info-code").innerText = set.code_val;
-        document.getElementById("info-code-sub").innerText = set.code_sub;
-        document.getElementById("journey-title").innerText = set.journey_title;
-        document.getElementById("journey-desc").innerText = set.journey_desc;
-        document.getElementById("goals-title").innerText = set.goals_title;
-        document.getElementById("goals-desc").innerText = set.goals_desc;
-        document.getElementById("goals-quote").innerText = set.goals_quote;
+        document.getElementById("hero-greeting").innerText = set.hero_greeting || "Hello, I'm";
+        document.getElementById("hero-name").innerText = set.hero_name || "Sanket Kumar Sahu";
+        document.getElementById("hero-subtag").innerText = set.hero_subtag || "";
+        document.getElementById("hero-desc").innerText = set.hero_desc || "";
+        document.getElementById("hero-cursive").innerText = set.hero_cursive || "";
+        document.getElementById("hero-quote").innerText = set.hero_quote || "";
+        document.getElementById("hero-quote-author").innerText = set.hero_quote_author || "";
+        document.getElementById("about-desc").innerText = set.about_desc || "";
+        document.getElementById("about-quote").innerText = set.about_quote || "";
+        document.getElementById("about-subquote").innerText = set.about_subquote || "";
+        document.getElementById("info-age").innerText = set.age_val || "17";
+        document.getElementById("info-age-sub").innerText = set.age_sub || "";
+        document.getElementById("info-edu").innerText = set.edu_val || "";
+        document.getElementById("info-edu-sub").innerText = set.edu_sub || "";
+        document.getElementById("info-home").innerText = set.home_val || "";
+        document.getElementById("info-code").innerText = set.code_val || "";
+        document.getElementById("info-code-sub").innerText = set.code_sub || "";
+        document.getElementById("journey-title").innerText = set.journey_title || "My Journey";
+        document.getElementById("journey-desc").innerText = set.journey_desc || "";
+        document.getElementById("goals-title").innerText = set.goals_title || "Goals";
+        document.getElementById("goals-desc").innerText = set.goals_desc || "";
+        document.getElementById("goals-quote").innerText = set.goals_quote || "";
 
         if (set.hero_image) {
           document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
@@ -362,7 +362,7 @@
         `).join('');
       }
 
-      // Writings (Only what owner writes!)
+      // Writings
       const { data: wr } = await supabase.from('writings').select('*').order('created_at', { ascending: false });
       const wrWrap = document.getElementById("writings-list-container");
       if (wr && wr.length > 0) {
@@ -386,4 +386,4 @@
         const wrap = document.getElementById("goals-list-container");
         wrap.innerHTML = gl.map(g => `
           <div class="goal-entry">
-            <span style="color: ${g.comple
+            <span style="color: ${g.completed ? 'var(--glow-cyan)' : 'var(
