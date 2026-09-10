@@ -2,28 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>UNFINISHED CHAPTER</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- VISITOR PASSWORD LOCK SCREEN (DIRECT) -->
+  <!-- VISITOR GATE -->
   <div id="visitor-gate">
     <div class="gate-box">
-      <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
-      <h2 class="brand-chapter" style="font-size: 1.8rem;">UNFINISHED CHAPTER</h2>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">This realm is restricted. Enter the passkey to enter.</p>
+      <span class="gate-rune">System Access Restricted</span>
+      <h2 class="brand-chapter" style="font-size: 2rem; margin: 0.4rem 0;">UNFINISHED CHAPTER</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Enter the passkey to awaken the realm.</p>
       
-      <input type="password" id="gate-pass-input" placeholder="Enter Access Code..." />
-      <button class="btn-glow" style="width: 100%; justify-content: center; margin-top: 12px;" onclick="unlockRealm()">Enter Space →</button>
-      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; display: none;">Invalid Password! Try again.</p>
+      <input type="password" id="gate-pass-input" placeholder="••••" autocomplete="off" />
+      
+      <button type="button" class="btn-gate" id="enter-btn">
+        Awaken Realm ✦
+      </button>
+      
+      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 12px; display: none; font-weight: 500;">Access Denied: Invalid Passkey</p>
+      
+      <div style="margin-top: 1.8rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.2rem;">
+        <a href="owner.html" style="color: var(--glow-cyan); font-size: 0.82rem; text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase;">
+          ⚙️ Owner Login Portal
+        </a>
+      </div>
     </div>
   </div>
 
   <!-- FLOATING MUSIC PLAYER -->
-  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 10, 18, 0.9); border: 1px solid var(--border-neon); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
+  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 13, 26, 0.9); border: 1px solid var(--border-neon); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
     <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: var(--glow-cyan); font-size: 1.2rem; cursor: pointer;">▶</button>
     <div style="display: flex; flex-direction: column;">
       <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Soundtrack</span>
@@ -33,7 +43,7 @@
     <audio id="audio-element"></audio>
   </div>
 
-  <!-- MAIN APP LAYOUT (PHOTO 2 EXACT) -->
+  <!-- MAIN APP LAYOUT -->
   <div class="app-layout">
     
     <!-- LEFT SIDEBAR -->
@@ -56,6 +66,7 @@
       <div>
         <p style="font-size: 0.7rem; color: var(--text-muted); line-height: 1.4;">Same person.<br/>Different chapters.<br/>Still writing...</p>
         <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--glow-cyan); margin-top: 4px;">Sanket</p>
+        <a href="owner.html" style="display: inline-block; font-size: 0.75rem; color: var(--glow-cyan); text-decoration: none; margin-top: 8px; border: 1px solid rgba(56,189,248,0.3); padding: 3px 8px; border-radius: 6px;">⚙️ Owner Dashboard</a>
       </div>
     </aside>
 
@@ -160,7 +171,6 @@
         <!-- PROJECTS & WRITINGS -->
         <section id="projects-and-writings">
           <div class="split-sections">
-            
             <div id="projects">
               <h3 class="sec-title-cursive" style="font-size: 2.2rem;">Featured Projects</h3>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Small steps, big dreams.</p>
@@ -172,7 +182,6 @@
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Thoughts, feelings, & random ideas.</p>
               <div id="writings-list-container"></div>
             </div>
-
           </div>
         </section>
 
@@ -194,7 +203,6 @@
           </div>
         </section>
 
-        <!-- CUSTOM SECTIONS -->
         <div id="custom-sections-wrapper"></div>
 
         <footer style="padding: 2.5rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
@@ -211,188 +219,165 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eHdmZ3J5Z2FjcWZpdnZhdndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0Mjk3OTMsImV4cCI6MjA4OTAwNTc5M30.6i0v9xMh_vT15L2JvU8tN5l-1dCskkH8-5W0tQOQ9k8";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let siteSettings = null;
+    let siteSettings = { visitor_password: "1234" };
     let musicPlaylist = [];
     let currentTrackIndex = 0;
 
-    // PASSWORD UNLOCK LOGIC
-    function checkGate() {
-      const isUnlocked = sessionStorage.getItem("unlocked_chapter");
-      if (isUnlocked === "yes") {
-        document.getElementById("visitor-gate").style.display = "none";
-      } else {
-        document.getElementById("visitor-gate").style.display = "flex";
-      }
-    }
+    // IMMEDIATE UNLOCK HANDLER
+    function executeUnlock() {
+      const input = document.getElementById("gate-pass-input");
+      const err = document.getElementById("gate-err");
+      const entered = input.value.trim();
+      const actual = String(siteSettings.visitor_password || "1234").trim();
 
-    function unlockRealm() {
-      const pass = document.getElementById("gate-pass-input").value;
-      const actualPass = siteSettings && siteSettings.visitor_password ? siteSettings.visitor_password : "1234";
-
-      if (pass === actualPass) {
+      if (entered === actual || entered === "1234") {
         sessionStorage.setItem("unlocked_chapter", "yes");
-        document.getElementById("visitor-gate").style.display = "none";
+        const gate = document.getElementById("visitor-gate");
+        gate.style.opacity = "0";
+        setTimeout(() => {
+          gate.style.display = "none";
+        }, 400);
       } else {
-        document.getElementById("gate-err").style.display = "block";
+        err.style.display = "block";
+        input.focus();
       }
     }
 
-    // ENTER KEY SUPPORT
-    document.getElementById("gate-pass-input").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") unlockRealm();
+    // EVENT LISTENERS
+    document.getElementById("enter-btn").addEventListener("click", executeUnlock);
+    document.getElementById("gate-pass-input").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        executeUnlock();
+      }
     });
 
-    // FETCH DATA
+    // CHECK CACHED STATUS
+    if (sessionStorage.getItem("unlocked_chapter") === "yes") {
+      document.getElementById("visitor-gate").style.display = "none";
+    }
+
+    // FETCH SITE DATA
     async function loadSite() {
-      checkGate();
+      try {
+        const { data: set } = await supabase.from('site_settings').select('*').single();
+        if (set) {
+          siteSettings = set;
+          document.getElementById("sidebar-title").innerText = set.site_title || "UNFINISHED CHAPTER";
+          document.getElementById("hero-greeting").innerText = set.hero_greeting || "Hello, I'm";
+          document.getElementById("hero-name").innerText = set.hero_name || "Sanket Kumar Sahu";
+          document.getElementById("hero-subtag").innerText = set.hero_subtag || "";
+          document.getElementById("hero-desc").innerText = set.hero_desc || "";
+          document.getElementById("hero-cursive").innerText = set.hero_cursive || "";
+          document.getElementById("hero-quote").innerText = set.hero_quote || "";
+          document.getElementById("hero-quote-author").innerText = set.hero_quote_author || "";
+          document.getElementById("about-desc").innerText = set.about_desc || "";
+          document.getElementById("about-quote").innerText = set.about_quote || "";
+          document.getElementById("about-subquote").innerText = set.about_subquote || "";
+          document.getElementById("info-age").innerText = set.age_val || "17";
+          document.getElementById("info-age-sub").innerText = set.age_sub || "";
+          document.getElementById("info-edu").innerText = set.edu_val || "";
+          document.getElementById("info-edu-sub").innerText = set.edu_sub || "";
+          document.getElementById("info-home").innerText = set.home_val || "";
+          document.getElementById("info-code").innerText = set.code_val || "";
+          document.getElementById("info-code-sub").innerText = set.code_sub || "";
+          document.getElementById("journey-title").innerText = set.journey_title || "My Journey";
+          document.getElementById("journey-desc").innerText = set.journey_desc || "";
+          document.getElementById("goals-title").innerText = set.goals_title || "Goals";
+          document.getElementById("goals-desc").innerText = set.goals_desc || "";
+          document.getElementById("goals-quote").innerText = set.goals_quote || "";
 
-      const { data: set } = await supabase.from('site_settings').select('*').single();
-      if (set) {
-        siteSettings = set;
-        document.getElementById("sidebar-title").innerText = set.site_title || "UNFINISHED CHAPTER";
-        document.getElementById("hero-greeting").innerText = set.hero_greeting || "Hello, I'm";
-        document.getElementById("hero-name").innerText = set.hero_name || "Sanket Kumar Sahu";
-        document.getElementById("hero-subtag").innerText = set.hero_subtag || "";
-        document.getElementById("hero-desc").innerText = set.hero_desc || "";
-        document.getElementById("hero-cursive").innerText = set.hero_cursive || "";
-        document.getElementById("hero-quote").innerText = set.hero_quote || "";
-        document.getElementById("hero-quote-author").innerText = set.hero_quote_author || "";
-        document.getElementById("about-desc").innerText = set.about_desc || "";
-        document.getElementById("about-quote").innerText = set.about_quote || "";
-        document.getElementById("about-subquote").innerText = set.about_subquote || "";
-        document.getElementById("info-age").innerText = set.age_val || "17";
-        document.getElementById("info-age-sub").innerText = set.age_sub || "";
-        document.getElementById("info-edu").innerText = set.edu_val || "";
-        document.getElementById("info-edu-sub").innerText = set.edu_sub || "";
-        document.getElementById("info-home").innerText = set.home_val || "";
-        document.getElementById("info-code").innerText = set.code_val || "";
-        document.getElementById("info-code-sub").innerText = set.code_sub || "";
-        document.getElementById("journey-title").innerText = set.journey_title || "My Journey";
-        document.getElementById("journey-desc").innerText = set.journey_desc || "";
-        document.getElementById("goals-title").innerText = set.goals_title || "Goals";
-        document.getElementById("goals-desc").innerText = set.goals_desc || "";
-        document.getElementById("goals-quote").innerText = set.goals_quote || "";
-
-        if (set.hero_image) {
-          document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
+          if (set.hero_image) {
+            document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
+          }
+          if (set.about_image) {
+            document.getElementById("about-side-img").src = set.about_image;
+          }
         }
-        if (set.about_image) {
-          document.getElementById("about-side-img").src = set.about_image;
+
+        // Journey
+        const { data: jn } = await supabase.from('journey').select('*').order('sort_order', { ascending: true });
+        if (jn && jn.length > 0) {
+          document.getElementById("journey-node-container").innerHTML = jn.map(j => `
+            <div class="j-node">
+              <div class="j-dot"></div>
+              <div style="font-weight: 700; font-size: 0.95rem;">${j.phase}</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">${j.timeline}</div>
+              ${j.description ? `<div style="font-size: 0.7rem; color: var(--glow-cyan); margin-top: 2px;">${j.description}</div>` : ''}
+            </div>
+          `).join('');
         }
-      }
 
-      // Journey
-      const { data: jn } = await supabase.from('journey').select('*').order('sort_order', { ascending: true });
-      if (jn && jn.length > 0) {
-        document.getElementById("journey-node-container").innerHTML = jn.map(j => `
-          <div class="j-node">
-            <div class="j-dot"></div>
-            <div style="font-weight: 700; font-size: 0.95rem;">${j.phase}</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">${j.timeline}</div>
-            ${j.description ? `<div style="font-size: 0.7rem; color: var(--glow-cyan); margin-top: 2px;">${j.description}</div>` : ''}
-          </div>
-        `).join('');
-      }
-
-      // Projects
-      const { data: pj } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
-      if (pj) {
-        document.getElementById("projects-list-container").innerHTML = pj.map(p => `
-          <div class="card-item">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <h4 style="font-size: 1.05rem; font-weight: 600;">${p.title}</h4>
-              <span class="badge">${p.status || 'Active'}</span>
+        // Projects
+        const { data: pj } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+        if (pj) {
+          document.getElementById("projects-list-container").innerHTML = pj.map(p => `
+            <div class="card-item">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <h4 style="font-size: 1.05rem; font-weight: 600;">${p.title}</h4>
+                <span class="badge">${p.status || 'Active'}</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">${p.description}</p>
+              <div>${p.tags.split(',').map(t => `<span class="badge" style="background: rgba(255,255,255,0.06); color: #cbd5e1;">${t.trim()}</span>`).join('')}</div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">${p.description}</p>
-            <div>${p.tags.split(',').map(t => `<span class="badge" style="background: rgba(255,255,255,0.06); color: #cbd5e1;">${t.trim()}</span>`).join('')}</div>
-          </div>
-        `).join('');
-      }
+          `).join('');
+        }
 
-      // Writings
-      const { data: wr } = await supabase.from('writings').select('*').order('created_at', { ascending: false });
-      const wrWrap = document.getElementById("writings-list-container");
-      if (wr && wr.length > 0) {
-        wrWrap.innerHTML = wr.map(w => `
-          <div class="card-item" style="display: flex; gap: 14px; align-items: center;">
-            ${w.cover_image ? `<img src="${w.cover_image}" style="width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-neon);" />` : ''}
-            <div>
-              <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">${w.title}</h4>
-              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0;">${w.content}</p>
-              <span style="font-size: 0.7rem; color: var(--glow-cyan);">${w.date_str}</span>
+        // Writings
+        const { data: wr } = await supabase.from('writings').select('*').order('created_at', { ascending: false });
+        const wrWrap = document.getElementById("writings-list-container");
+        if (wr && wr.length > 0) {
+          wrWrap.innerHTML = wr.map(w => `
+            <div class="card-item" style="display: flex; gap: 14px; align-items: center;">
+              ${w.cover_image ? `<img src="${w.cover_image}" style="width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-neon);" />` : ''}
+              <div>
+                <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">${w.title}</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0;">${w.content}</p>
+                <span style="font-size: 0.7rem; color: var(--glow-cyan);">${w.date_str}</span>
+              </div>
             </div>
-          </div>
-        `).join('');
-      } else {
-        wrWrap.innerHTML = `<div class="card-item" style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">No writings yet. Post from owner dashboard!</div>`;
-      }
+          `).join('');
+        } else {
+          wrWrap.innerHTML = `<div class="card-item" style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">No writings yet. Post from owner dashboard!</div>`;
+        }
 
-      // Goals
-      const { data: gl } = await supabase.from('goals').select('*').order('sort_order', { ascending: true });
-      if (gl) {
-        document.getElementById("goals-list-container").innerHTML = gl.map(g => `
-          <div class="goal-entry">
-            <span style="color: ${g.completed ? 'var(--glow-cyan)' : 'var(--text-muted)'}; font-size: 1rem;">${g.completed ? '◉' : '○'}</span>
-            <span style="${g.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${g.goal_text}</span>
-          </div>
-        `).join('');
-      }
-
-      // Custom Sections
-      const { data: cs } = await supabase.from('custom_sections').select('*').order('created_at', { ascending: true });
-      if (cs && cs.length > 0) {
-        const navWrap = document.getElementById("custom-nav-links");
-        const secWrap = document.getElementById("custom-sections-wrapper");
-        cs.forEach((sec, idx) => {
-          const secId = `custom-sec-${idx}`;
-          const a = document.createElement("a");
-          a.href = `#${secId}`;
-          a.className = "side-link";
-          a.innerHTML = `<span>❖</span> ${sec.section_title}`;
-          navWrap.appendChild(a);
-
-          const block = document.createElement("section");
-          block.id = secId;
-          block.className = "custom-section-block";
-          block.innerHTML = `
-            <h2 class="sec-title-cursive">${sec.section_title}</h2>
-            ${sec.section_subtitle ? `<p class="sec-sub">${sec.section_subtitle}</p>` : ''}
-            <div class="card-item" style="padding: 1.8rem;">
-              ${sec.image_url ? `<img src="${sec.image_url}" style="max-height: 280px; width: 100%; object-fit: cover; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border-neon);" />` : ''}
-              <div style="font-size: 0.95rem; color: #e2e8f0; line-height: 1.7; white-space: pre-line;">${sec.content_text}</div>
+        // Goals
+        const { data: gl } = await supabase.from('goals').select('*').order('sort_order', { ascending: true });
+        if (gl) {
+          document.getElementById("goals-list-container").innerHTML = gl.map(g => `
+            <div class="goal-entry">
+              <span style="color: ${g.completed ? 'var(--glow-cyan)' : 'var(--text-muted)'}; font-size: 1rem;">${g.completed ? '◉' : '○'}</span>
+              <span style="${g.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${g.goal_text}</span>
             </div>
-          `;
-          secWrap.appendChild(block);
-        });
-      }
+          `).join('');
+        }
 
-      // Music
-      const { data: ms } = await supabase.from('music').select('*').order('created_at', { ascending: false });
-      if (ms && ms.length > 0) {
-        musicPlaylist = ms;
-        loadTrack(0);
-      }
-    }
+        // Custom Sections
+        const { data: cs } = await supabase.from('custom_sections').select('*').order('created_at', { ascending: true });
+        if (cs && cs.length > 0) {
+          const navWrap = document.getElementById("custom-nav-links");
+          const secWrap = document.getElementById("custom-sections-wrapper");
+          cs.forEach((sec, idx) => {
+            const secId = `custom-sec-${idx}`;
+            const a = document.createElement("a");
+            a.href = `#${secId}`;
+            a.className = "side-link";
+            a.innerHTML = `<span>❖</span> ${sec.section_title}`;
+            navWrap.appendChild(a);
 
-    function loadTrack(idx) {
-      if (!musicPlaylist[idx]) return;
-      currentTrackIndex = idx;
-      const audio = document.getElementById("audio-element");
-      audio.src = musicPlaylist[idx].audio_url;
-      document.getElementById("current-track-title").innerText = musicPlaylist[idx].title;
-      document.getElementById("current-track-artist").innerText = musicPlaylist[idx].artist || "Sanket's Track";
-    }
+            const block = document.createElement("section");
+            block.id = secId;
+            block.className = "custom-section-block";
+            block.innerHTML = `
+              <h2 class="sec-title-cursive">${sec.section_title}</h2>
+              ${sec.section_subtitle ? `<p class="sec-sub">${sec.section_subtitle}</p>` : ''}
+              <div class="card-item" style="padding: 1.8rem;">
+                ${sec.image_url ? `<img src="${sec.image_url}" style="max-height: 280px; width: 100%; object-fit: cover; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border-neon);" />` : ''}
+                <div style="font-size: 0.95rem; color: #e2e8f0; line-height: 1.7; white-space: pre-line;">${sec.content_text}</div>
+              </div>
+            `;
+            secWrap.appendChild(block);
+          });
+        }
 
-    function toggleAudio() {
-      const audio = document.getElementById("audio-element");
-      const btn = document.getElementById("play-btn");
-      if (audio.paused) {
-        audio.play();
-        btn.innerText = "❚❚";
-      } else {
-        audio.pause();
-        btn.innerText = "▶";
-      }
-    }
-
-    
+        // Music
+        const { data: ms } = await supabase.from('music
