@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unfinished | Owner Control Panel</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .admin-wrap { max-width: 680px; margin: 2rem auto; padding: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 0.4rem; font-weight: 500; }
+    input, textarea, select {
+      width: 100%; padding: 0.75rem; background: #0c101a; border: 1px solid var(--border-glow);
+      border-radius: 8px; color: #fff; font-family: inherit; font-size: 0.9rem;
+    }
+    input:focus, textarea:focus { outline: 1px solid var(--accent-cyan); }
+    .panel-section { margin-bottom: 2rem; border-left: 3px solid var(--accent-blue); }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrap">
+    <!-- AUTHENTICATION FORM (Agar Logged Out ho) -->
+    <div id="auth-box" class="glass-card">
+      <h2 style="margin-bottom: 0.5rem;">Unfinished — Owner Login</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Only authorized owner can modify this space.</p>
+      
+      <div class="form-group">
+        <label>Owner Email</label>
+        <input type="email" id="login-email" placeholder="sanket@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+      </div>
+      <button class="btn-primary" onclick="handleLogin()" style="width: 100%; cursor: pointer;">Sign In</button>
+      <p id="login-msg" style="color: #f87171; margin-top: 10px; font-size: 0.85rem;"></p>
+    </div>
+
+    <!-- DASHBOARD PANEL (Authenticated Owner Only) -->
+    <div id="dashboard-box" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <h3>Owner Dashboard</h3>
+          <span style="font-size: 0.75rem; color: var(--accent-cyan);">Status: Authenticated</span>
+        </div>
+        <div>
+          <a href="index.html" class="owner-btn" target="_blank">View Site</a>
+          <button class="owner-btn" onclick="handleLogout()" style="background: #dc2626; border: none; margin-left: 8px; cursor: pointer;">Logout</button>
+        </div>
+      </div>
+
+      <!-- 1. PHOTO & MUSIC UPLOADER -->
+      <div class="glass-card panel-section">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">1. File Storage Uploader (Images & Music)</h4>
+        <div class="form-group">
+          <label>Select File</label>
+          <input type="file" id="file-upload" />
+        </div>
+        <div class="form-group">
+          <label>Choose Bucket</label>
+          <select id="bucket-select">
+            <option value="images">images (for hero / thoughts cover)</option>
+            <option value="music">music (for audio soundtrack)</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="uploadFile()" style="cursor: pointer;">Upload File</button>
+        <div id="upload-result" style="margin-top: 10px; font-size: 0.8rem; word-break: break-all;"></div>
+      </div>
+
+      <!-- 2. EDIT HERO & DETAILS -->
+      <div class="glass-card panel-section">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">2. Update Hero & Bio</h4>
+        <div class="form-group"><label>Hero Title</label><input id="set-hero-title" /></div>
+        <div class="form-group"><label>Hero Image Link</label><input id="set-hero-img" placeholder="Paste uploaded image URL here" /></div>
+        <div class="form-group"><label>Quote</label><input id="set-quote" /></div>
+        <div class="form-group"><label>About Description</label><textarea id="set-about-text" rows="3"></textarea></div>
+        <div class="form-group"><label>Education / Score</label><input id="set-education" /></div>
+        <button class="btn-primary" onclick="saveSettings()" style="cursor: pointer;">Save Bio Changes</button>
+      </div>
+
+      <!-- 3. ADD WRITING / THOUGHT -->
+      <div class="glass-card panel-section">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">3. Post Writing / Thought</h4>
+        <div class="form-group"><label>Title</label><input id="w-title" placeholder="e.g. Midnight reflections..." /></div>
+        <div class="form-group"><label>Content</label><textarea id="w-content" rows="3" placeholder="Write your words here..."></textarea></div>
+        <div class="form-group"><label>Cover Image URL (Optional)</label><input id="w-cover" placeholder="Paste image link" /></div>
+        <div class="form-group"><label>Date Label</label><input id="w-date" placeholder="e.g. Sep 10, 2026" /></div>
+        <button class="btn-primary" onclick="addWriting()" style="cursor: pointer;">Publish Writing</button>
+      </div>
+
+      <!-- 4. ADD SONG -->
+      <div class="glass-card panel-section">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">4. Add Song to Soundtrack</h4>
+        <div class="form-group"><label>Track Title</label><input id="m-title" placeholder="Song name" /></div>
+        <div class="form-group"><label>Artist Name</label><input id="m-artist" placeholder="Artist or Anime OST" /></div>
+        <div class="form-group"><label>Public Audio Link (From Uploader)</label><input id="m-url" placeholder="Paste uploaded audio URL" /></div>
+        <button class="btn-primary" onclick="addMusic()" style="cursor: pointer;">Add Track</button>
+      </div>
+
+      <!-- 5. ADD PROJECT -->
+      <div class="glass-card panel-section">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">5. Add New Project</h4>
+        <div class="form-group"><label>Project Title</label><input id="p-title" /></div>
+        <div class="form-group"><label>Description</label><textarea id="p-desc" rows="2"></textarea></div>
+        <div class="form-group"><label>Tags (Comma separated)</label><input id="p-tags" placeholder="Python, Web, AI" /></div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="p-status">
+            <option value="Live">Live</option>
+            <option value="Planned">Planned</option>
+            <option value="In Progress">In Progress</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="addProject()" style="cursor: pointer;">Add Project</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="supabase-config.js"></script>
+  <script>
+    // Check Session
+    async function checkUser() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        document.getElementById('auth-box').style.display = 'none';
+        document.getElementById('dashboard-box').style.display = 'block';
+        loadCurrentSettings();
+      } else {
+        document.getElementById('auth-box').style.display = 'block';
+        document.getElementById('dashboard-box').style.display = 'none';
+      }
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        document.getElementById('login-msg').innerText = error.message;
+      } else {
+        checkUser();
+      }
+    }
+
+    async function handleLogout() {
+      await supabaseClient.auth.signOut();
+      location.reload();
+    }
+
+    // Load Existing Site Settings
+    async function loadCurrentSettings() {
+      const { data } = await supabaseClient.from('site_settings').select('*').single();
+      if (data) {
+        document.getElementById('set-hero-title').value = data.hero_title || '';
+        document.getElementById('set-hero-img').value = data.hero_image || '';
+        document.getElementById('set-quote').value = data.quote || '';
+        document.getElementById('set-about-text').value = data.about_text || '';
+        document.getElementById('set-education').value = data.education || '';
+      }
+    }
+
+    // 1. Upload File (Image or MP3)
+    async function uploadFile() {
+      const fileInput = document.getElementById('file-upload');
+      const bucket = document.getElementById('bucket-select').value;
+      const file = fileInput.files[0];
+      if (!file) return alert('Please select a file first.');
+
+      const cleanName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+      const fileName = `${Date.now()}_${cleanName}`;
+      
+      document.getElementById('upload-result').innerText = 'Uploading, please wait...';
+
+      const { data, error } = await supabaseClient.storage.from(bucket).upload(fileName, file);
+
+      if (error) {
+        document.getElementById('upload-result').innerText = 'Upload Error: ' + error.message;
+      } else {
+        const { data: publicData } = supabaseClient.storage.from(bucket).getPublicUrl(fileName);
+        document.getElementById('upload-result').innerHTML = `
+          <span style="color:#4ade80;">Upload Success!</span> Copy URL:<br>
+          <input value="${publicData.publicUrl}" readonly onclick="this.select()" style="margin-top:4px;" />
+        `;
+      }
+    }
+
+    // 2. Save Site Settings
+    async function saveSettings() {
+      const updates = {
+        hero_title: document.getElementById('set-hero-title').value,
+        hero_image: document.getElementById('set-hero-img').value,
+        quote: document.getElementById('set-quote').value,
+        about_text: document.getElementById('set-about-text').value,
+        education: document.getElementById('set-education').value,
+        updated_at: new Date()
+      };
+      const { error } = await supabaseClient.from('site_settings').update(updates).eq('id', 1);
+      if (!error) alert('Site settings updated!');
+      else alert(error.message);
+    }
+
+    // 3. Add Writing
+    async function addWriting() {
+      const title = document.getElementById('w-title').value;
+      const content = document.getElementById('w-content').value;
+      const cover_image = document.getElementById('w-cover').value;
+      const date_str = document.getElementById('w-date').value || new Date().toDateString();
+
+      if (!title || !content) return alert('Title and Content are required.');
+
+      const { error } = await supabaseClient.from('writings').insert([{ title, content, cover_image, date_str }]);
+      if (!error) {
+        alert('Thought published successfully!');
+        document.getElementById('w-title').value = '';
+        document.getElementById('w-content').value = '';
+        document.getElementById('w-cover').value = '';
+      } else {
+        alert(error.message);
+      }
+    }
+
+    // 4. Add Music
+    async function addMusic() {
+      const title = document.getElementById('m-title').value;
+      const artist = document.getElementById('m-artist').value || 'Unknown';
+      const audio_url = document.getElementById('m-url').value;
+
+      if (!title || !audio_url) return alert('Track title and Audio URL are required.');
+
+      const { error } = await supabaseClient.from('music').insert([{ title, artist, audio_url }]);
+      if (!error) {
+        alert('Track added to soundtrack!');
+        document.getElementById('m-title').value = '';
+        document.getElementById('m-artist').value = '';
+        document.getElementById('m-url').value = '';
+      } else {
+        alert(error.message);
+      }
+    }
+
+    // 5. Add Project
+    async function addProject() {
+      const title = document.getElementById('p-title').value;
+      const description = document.getElementById('p-desc').value;
+      const tags = document.getElementById('p-tags').value;
+      const status = document.getElementById('p-status').value;
+
+      if (!title) return alert('Project title is required.');
+
+      const { error } = await supabaseClient.from('projects').insert([{ title, description, tags, status }]);
+      if (!error) {
+        alert('Project added!');
+        document.getElementById('p-title').value = '';
+        document.getElementById('p-desc').value = '';
+        document.getElementById('p-tags').value = '';
+      } else {
+        alert(error.message);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', checkUser);
+  </script>
+</body>
+</html>
