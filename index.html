@@ -3,330 +3,318 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>UNFINISHED CHAPTER</title>
+  <title>UNFINISHED CHAPTER — Sanket Kumar Sahu</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* DIRECT OVERRIDE TO STOP FREEZE */
-    #visitor-gate {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #030712;
-      z-index: 999999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .gate-box {
-      background: #0b1221;
-      border: 1px solid #38bdf8;
-      box-shadow: 0 0 30px rgba(56,189,248,0.2);
-      border-radius: 20px;
-      padding: 30px 20px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-    }
-    #gate-pass-input {
-      width: 100%;
-      padding: 14px;
-      margin: 15px 0;
-      background: #030712;
-      border: 1px solid #38bdf8;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1.2rem;
-      text-align: center;
-      letter-spacing: 5px;
-      outline: none;
-      -webkit-user-select: auto;
-      user-select: auto;
-    }
-    .btn-gate {
-      width: 100%;
-      padding: 14px;
-      background: #38bdf8;
-      color: #030712;
-      font-weight: 800;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-  </style>
 </head>
 <body>
 
-  <!-- VISITOR GATE -->
-  <div id="visitor-gate">
-    <div class="gate-box">
-      <span style="color: #38bdf8; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700;">System Awakening</span>
-      <h2 style="font-size: 1.6rem; color: #fff; margin: 8px 0; font-family: 'Outfit', sans-serif;">UNFINISHED CHAPTER</h2>
-      <p style="font-size: 0.8rem; color: #94a3b8;">Enter the passkey to awaken the realm.</p>
-      
-      <input type="password" id="gate-pass-input" placeholder="••••" autocomplete="off" />
-      
-      <button type="button" class="btn-gate" id="enter-btn" onclick="directUnlock()" ontouchend="directUnlock()">
-        AWAKEN REALM ✦
-      </button>
-      
-      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; display: none;">Invalid Passkey!</p>
-      
-      <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-        <a href="owner.html" style="color: #38bdf8; font-size: 0.8rem; text-decoration: none; letter-spacing: 1px;">
-          ⚙️ OWNER LOGIN PORTAL
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- FLOATING MUSIC WIDGET -->
-  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 99; background: rgba(7, 13, 26, 0.95); border: 1px solid #38bdf8; border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px;">
-    <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: #38bdf8; font-size: 1.2rem; cursor: pointer;">▶</button>
-    <div style="display: flex; flex-direction: column;">
-      <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff;">Theme Soundtrack</span>
-      <span style="font-size: 0.65rem; color: #94a3b8;">Sanket's Playlist</span>
-    </div>
-    <audio id="audio-element" loop preload="auto"></audio>
-  </div>
-
-  <!-- MAIN APP LAYOUT -->
-  <div class="app-layout">
+  <!-- APP LAYOUT -->
+  <div class="app-container">
     
-    <!-- LEFT SIDEBAR -->
+    <!-- LEFT FIXED SIDEBAR -->
     <aside class="sidebar">
       <div>
-        <h1 class="brand-chapter" style="font-size: 1.35rem;">UNFINISHED CHAPTER</h1>
-        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 6px;">Not just a website, but a record of my thoughts, journey and dreams.</p>
+        <h1 class="brand-cursive" style="font-family: 'Outfit', sans-serif; font-size: 1.35rem; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);">UNFINISHED CHAPTER</h1>
+        <p class="brand-desc">Not just a website<br/>but a record of my thoughts,<br/>journey and dreams.</p>
         
         <nav class="side-nav">
-          <a href="#home" class="side-link active"><span>✦</span> Home</a>
-          <a href="#about" class="side-link"><span>👤</span> About</a>
-          <a href="#journey" class="side-link"><span>🛤️</span> Journey</a>
-          <a href="#projects" class="side-link"><span>💻</span> Projects</a>
-          <a href="#writings" class="side-link"><span>✍️</span> Writings</a>
-          <a href="#goals" class="side-link"><span>🎯</span> Goals</a>
+          <a href="#home" class="nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            Home
+          </a>
+          <a href="#about" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            About
+          </a>
+          <a href="#journey" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            Journey
+          </a>
+          <a href="#projects" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            Projects
+          </a>
+          <a href="#writings" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            Writings
+          </a>
+          <a href="#goals" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+            Goals
+          </a>
         </nav>
       </div>
 
-      <div>
-        <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4;">Same person.<br/>Different chapters.<br/>Still writing...</p>
-        <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #38bdf8; margin-top: 4px;">Sanket</p>
-        <a href="owner.html" style="display: inline-block; font-size: 0.75rem; color: #38bdf8; text-decoration: none; margin-top: 8px; border: 1px solid rgba(56,189,248,0.3); padding: 4px 10px; border-radius: 6px;">⚙️ Owner Dashboard</a>
+      <div class="sidebar-bottom">
+        <p>Same person<br/>Different chapters<br/>Still writing...</p>
+        <div class="sidebar-signature">Sanket</div>
+        
+        <div class="social-links">
+          <a href="#">▶</a>
+          <a href="#">💬</a>
+          <a href="#">📷</a>
+          <a href="#">🐙</a>
+        </div>
+
+        <div style="margin-top: 14px;">
+          <a href="owner.html" style="font-size: 0.72rem; color: var(--cyan); text-decoration: none; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px;">⚙️ Owner Portal</a>
+        </div>
       </div>
     </aside>
 
-    <!-- RIGHT MAIN CONTENT -->
-    <main class="main-wrapper">
+    <!-- MAIN RIGHT CONTENT -->
+    <main class="main-content">
       
-      <!-- HERO SECTION -->
-      <section id="home" class="hero-photo2">
-        <div class="hero-jinwoo-art" id="hero-img-box" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200');"></div>
-        <div class="korean-tag">
+      <!-- HERO -->
+      <section id="home" class="hero-sec">
+        <div class="hero-art-jinwoo"></div>
+        <div class="korean-hero-tag">
           <h4>성진우</h4>
           <span>Sung Jin Woo</span>
         </div>
 
-        <div class="content-container hero-body">
-          <div class="hello-badge">
+        <div class="hero-left">
+          <div class="greeting-pill">
             <span>🌐</span>
             <span>Hello, I'm</span>
           </div>
-          <h1 class="hero-name">Sanket Kumar Sahu</h1>
-          <p class="hero-subtag">A dreamer with a broken past, building a better future.</p>
-          <p style="color: #94a3b8; font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;">
+          <h1 class="hero-name-cursive">Sanket Kumar Sahu</h1>
+          <p class="hero-bio">
+            A dreamer with a broken past, building a better future.<br/><br/>
             This is my digital space — where I share my thoughts, progress, ideas and the things I love.
           </p>
-          <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; margin-bottom: 1.8rem;">
-            It's not perfect, but it's real.
-          </p>
-          <a href="#journey" class="btn-glow">Explore My Journey →</a>
+          <p class="hero-sub-cursive">It's not perfect, but it's real.</p>
+          <a href="#journey" class="btn-pill-explore">Explore My Journey →</a>
         </div>
 
-        <div class="hero-quote-bottom">
-          <p>“Even if I start from the very bottom... I'll still become the strongest.”</p>
+        <div class="hero-right-quote">
+          <p>“Even if I start from the very bottom...<br/>I'll still become the strongest.”</p>
           <span>— Sung Jin Woo</span>
+        </div>
+
+        <div class="scroll-mouse-icon">
+          <div>🖱</div>
+          Scroll Down
         </div>
       </section>
 
-      <div class="content-container">
+      <!-- ABOUT ME -->
+      <section id="about" class="content-section">
+        <h2 class="sec-header-cursive">About Me</h2>
         
-        <!-- ABOUT ME -->
-        <section id="about">
-          <div class="about-2col">
-            <div>
-              <h2 class="sec-title-cursive">About Me</h2>
-              <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.2rem;">
-                I'm just a normal guy with big dreams. I love anime, games, coding, and exploring new things.
-              </p>
-              
-              <div class="info-cards-4">
-                <div class="mini-box">
-                  <div style="color: #38bdf8; font-size: 1.1rem;">👤</div>
-                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Age</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;">17</div>
-                  <div style="font-size: 0.65rem; color: #94a3b8;">(May 10, 2009)</div>
-                </div>
+        <div class="about-grid">
+          <div>
+            <p class="about-p">
+              I'm just a normal guy with big dreams.<br/>
+              I love anime, games, coding, and exploring new things.<br/>
+              I'm not perfect, but I'm trying to be a better version of myself, day by day.
+            </p>
+            <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--cyan);">Still a lot to learn...</p>
 
-                <div class="mini-box">
-                  <div style="color: #38bdf8; font-size: 1.1rem;">🎓</div>
-                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Education</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;">12th (PCMB)</div>
-                  <div style="font-size: 0.65rem; color: #94a3b8;">CHSE Odisha</div>
-                </div>
-
-                <div class="mini-box">
-                  <div style="color: #38bdf8; font-size: 1.1rem;">📍</div>
-                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Home</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;">Odisha, India</div>
-                  <div style="font-size: 0.65rem; color: #94a3b8;">Native</div>
-                </div>
-
-                <div class="mini-box">
-                  <div style="color: #38bdf8; font-size: 1.1rem;">💻</div>
-                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Coding</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;">Beginner</div>
-                  <div style="font-size: 0.65rem; color: #94a3b8;">(Learning...)</div>
-                </div>
+            <div class="info-cards-row">
+              <div class="glass-box">
+                <div class="glass-box-icon">👤</div>
+                <div class="glass-box-label">Age</div>
+                <div class="glass-box-val">16</div>
+                <div class="glass-box-sub">(May 10, 2009)</div>
               </div>
-
-              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #38bdf8; margin-top: 1.5rem;">
-                Still a lot to learn...
-              </p>
+              <div class="glass-box">
+                <div class="glass-box-icon">🎓</div>
+                <div class="glass-box-label">Education</div>
+                <div class="glass-box-val">12th (PCMB)</div>
+                <div class="glass-box-sub">CHSE Odisha</div>
+              </div>
+              <div class="glass-box">
+                <div class="glass-box-icon">📍</div>
+                <div class="glass-box-label">Home</div>
+                <div class="glass-box-val">Odisha, India</div>
+                <div class="glass-box-sub">Native</div>
+              </div>
+              <div class="glass-box">
+                <div class="glass-box-icon">&lt;/&gt;</div>
+                <div class="glass-box-label">Coding</div>
+                <div class="glass-box-val">Beginner</div>
+                <div class="glass-box-sub">(Learning...)</div>
+              </div>
             </div>
 
-            <div class="about-right-art">
-              <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800" alt="Anime Portrait" />
-              <p style="font-style: italic; font-size: 0.85rem; color: #cbd5e1; margin-top: 10px; text-align: center;">
-                “A little progress each day adds up to big results.”
-              </p>
+            <a href="#journey" class="btn-pill-explore" style="font-size: 0.82rem; padding: 0.6rem 1.4rem;">Read More →</a>
+          </div>
+
+          <div class="about-right-poster">
+            <img src="https://wallpapercave.com/wp/wp12255761.jpg" alt="Sung Jin Woo Portrait" />
+            <div class="poster-overlay-quote">
+              “A little progress each day adds up to big results.”
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <!-- JOURNEY -->
-        <section id="journey">
-          <h2 class="sec-title-cursive">My Journey</h2>
-          <p class="sec-sub">From zero to something...</p>
+      <!-- JOURNEY -->
+      <section id="journey" class="content-section">
+        <h2 class="sec-header-cursive">My Journey</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">From zero to something...</p>
 
-          <div class="journey-banner">
-            <div class="journey-track-2">
-              <div class="j-node">
-                <div class="j-dot"></div>
-                <div style="font-weight: 700; font-size: 0.95rem;">Awakening</div>
-                <div style="font-size: 0.75rem; color: #94a3b8;">Class 10th Completed</div>
-              </div>
-              <div class="j-node">
-                <div class="j-dot"></div>
-                <div style="font-weight: 700; font-size: 0.95rem;">The Grind</div>
-                <div style="font-size: 0.75rem; color: #94a3b8;">12th Board Exams (PCMB)</div>
-              </div>
-              <div class="j-node">
-                <div class="j-dot"></div>
-                <div style="font-weight: 700; font-size: 0.95rem;">Monarch Rise</div>
-                <div style="font-size: 0.75rem; color: #94a3b8;">B.Tech CSE & Coding Mastery</div>
-              </div>
+        <div class="journey-card-wrapper">
+          <div class="journey-right-quote">
+            “Next chapter...<br/>College<br/>+<br/>Coding<br/>+<br/>Dreams”
+          </div>
+
+          <div class="journey-timeline-track">
+            <div class="j-point">
+              <div class="j-dot-icon"></div>
+              <div class="j-stage">Born</div>
+              <div class="j-detail">10 May 2009</div>
+            </div>
+            <div class="j-point">
+              <div class="j-dot-icon"></div>
+              <div class="j-stage">School</div>
+              <div class="j-detail">Class 10 (CBSE)</div>
+            </div>
+            <div class="j-point">
+              <div class="j-dot-icon"></div>
+              <div class="j-stage">12th</div>
+              <div class="j-detail">PCMB (CHSE Odisha)</div>
+            </div>
+            <div class="j-point">
+              <div class="j-dot-icon"></div>
+              <div class="j-stage">Preparing</div>
+              <div class="j-detail">For a better tomorrow</div>
+            </div>
+            <div class="j-point">
+              <div class="j-dot-icon"></div>
+              <div class="j-stage">College</div>
+              <div class="j-detail">Target: PMEC (CSE / CSE DS)</div>
+            </div>
+            <div class="j-point">
+              <div class="j-dot-icon"></div>
+              <div class="j-stage">Career</div>
+              <div class="j-detail">High Paying Job (Google / Microsoft)</div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <!-- PROJECTS & WRITINGS -->
-        <section id="projects-and-writings">
-          <div class="split-sections">
-            <div>
-              <h3 class="sec-title-cursive" style="font-size: 2.2rem;">Featured Projects</h3>
-              <p class="sec-sub" style="margin-bottom: 1.2rem;">Small steps, big dreams.</p>
-              <div class="card-item">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                  <h4 style="font-size: 1.05rem; font-weight: 600;">The Record — Digital Space</h4>
-                  <span class="badge">Live</span>
+      <!-- PROJECTS & WRITINGS -->
+      <section id="projects" class="content-section">
+        <div class="split-pw-row">
+          
+          <!-- PROJECTS -->
+          <div>
+            <div class="pw-header-row">
+              <div>
+                <h3 class="sec-header-cursive" style="font-size: 2.2rem;">Featured Projects</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Small steps, big dreams.</p>
+              </div>
+              <a href="#" class="view-all-link">View All</a>
+            </div>
+
+            <div class="cards-grid-3">
+              <div class="project-box">
+                <div>
+                  <div style="color: var(--cyan); font-size: 1.2rem;">💻</div>
+                  <div class="project-box-title">UNFINISHED CHAPTER</div>
+                  <div class="project-box-sub">Personal Website</div>
                 </div>
-                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px;">Personal website built with custom Solo Leveling anime aesthetic.</p>
-                <div><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">Supabase</span></div>
+                <div><span class="tag-badge">HTML</span> <span class="tag-badge">CSS</span> <span class="tag-badge">JS</span></div>
               </div>
-            </div>
 
-            <div>
-              <h3 class="sec-title-cursive" style="font-size: 2.2rem;">My Writings</h3>
-              <p class="sec-sub" style="margin-bottom: 1.2rem;">Thoughts, feelings, & random ideas.</p>
-              <div class="card-item">
-                <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">Why I Won't Stop Grinding</h4>
-                <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0;">No matter how hard it gets, every level requires a new version of yourself.</p>
-                <span style="font-size: 0.7rem; color: #38bdf8;">Chapter 1</span>
+              <div class="project-box">
+                <div>
+                  <div style="color: var(--cyan); font-size: 1.2rem;">🎮</div>
+                  <div class="project-box-title">Game Zone</div>
+                  <div class="project-box-sub">Gaming Highlights</div>
+                </div>
+                <div><span class="tag-badge">Minecraft</span> <span class="tag-badge">Free Fire</span></div>
+              </div>
+
+              <div class="project-box">
+                <div>
+                  <div style="color: var(--cyan); font-size: 1.2rem;">🧠</div>
+                  <div class="project-box-title">AI Career Guide</div>
+                  <div class="project-box-sub">Future Idea</div>
+                </div>
+                <div><span class="tag-badge">AI</span> <span class="tag-badge">Web App</span></div>
               </div>
             </div>
           </div>
-        </section>
 
-        <!-- GOALS -->
-        <section id="goals">
-          <h2 class="sec-title-cursive">Goals</h2>
-          <p class="sec-sub">Big dreams. Same me.</p>
-
-          <div class="goals-banner">
-            <div>
-              <div class="goal-entry"><span style="color: #38bdf8;">◉</span> Score 90%+ in 12th Board Exams</div>
-              <div class="goal-entry"><span style="color: #38bdf8;">◉</span> Master Computer Science & Software Dev</div>
-              <div class="goal-entry"><span style="color: #38bdf8;">◉</span> Reach top tier software engineering</div>
+          <!-- WRITINGS -->
+          <div id="writings">
+            <div class="pw-header-row">
+              <div>
+                <h3 class="sec-header-cursive" style="font-size: 2.2rem;">My Writings</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Thoughts, feelings, & random ideas.</p>
+              </div>
+              <a href="#" class="view-all-link">View All</a>
             </div>
-            <div style="text-align: right; position: relative;">
-              <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; line-height: 1.4;">
-                “I'm not chasing success, I'm chasing the version of myself that I'll be proud to look back at.”
-              </p>
+
+            <div class="cards-grid-3">
+              <div class="writing-box">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400" class="writing-thumb" />
+                <div class="writing-body">
+                  <div class="writing-title">Nothing is permanent Not even this body...</div>
+                  <div class="writing-date">Aug 26, 2025</div>
+                </div>
+              </div>
+
+              <div class="writing-box">
+                <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=400" class="writing-thumb" />
+                <div class="writing-body">
+                  <div class="writing-title">Is it God or just our own suffering?</div>
+                  <div class="writing-date">Aug 24, 2025</div>
+                </div>
+              </div>
+
+              <div class="writing-box">
+                <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400" class="writing-thumb" />
+                <div class="writing-body">
+                  <div class="writing-title">One sided love was better than rejection...</div>
+                  <div class="writing-date">Aug 14, 2025</div>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
 
-        <footer style="padding: 2.5rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
-          <h4 class="brand-chapter" style="font-size: 1.1rem;">UNFINISHED CHAPTER</h4>
-          <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 6px;">Crafted with discipline by Sanket</p>
-        </footer>
+        </div>
+      </section>
 
-      </div>
+      <!-- GOALS -->
+      <section id="goals" class="content-section">
+        <h2 class="sec-header-cursive">Goals</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Big dreams. Same me.</p>
+
+        <div class="goals-wrapper">
+          <div>
+            <div class="goal-item-row"><span class="circle-check"></span> Complete 12th with good marks</div>
+            <div class="goal-item-row"><span class="circle-check"></span> Get into a government college (PMEC)</div>
+            <div class="goal-item-row"><span class="circle-check"></span> Learn coding & build real projects</div>
+            <div class="goal-item-row"><span class="circle-check"></span> Get a high paying job (Google / Microsoft)</div>
+            <div class="goal-item-row"><span class="circle-check"></span> Make my family proud</div>
+            <div class="goal-item-row"><span class="circle-check"></span> Be the best version of myself</div>
+          </div>
+
+          <div class="goals-center-quote">
+            <p>“I'm not chasing success,<br/>I'm chasing the version of myself<br/>that I'll be proud to look back at.”</p>
+          </div>
+
+          <div class="vertical-japanese">まだ終わりじゃない</div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="site-footer">
+        <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: #fff;">UNFINISHED CHAPTER</div>
+        <p style="font-size: 0.75rem; color: var(--text-muted);">Created with ❤️ by Sanket</p>
+        <div class="social-links" style="margin-top: 0;">
+          <a href="#">▶</a>
+          <a href="#">📷</a>
+          <a href="#">🐙</a>
+        </div>
+      </footer>
+
     </main>
   </div>
 
-  <!-- BULLETPROOF DIRECT UNLOCK LOGIC -->
-  <script>
-    function directUnlock(e) {
-      if (e) e.preventDefault();
-      var input = document.getElementById("gate-pass-input");
-      var err = document.getElementById("gate-err");
-      var entered = (input.value || "").trim();
-
-      // Check 1234
-      if (entered === "1234") {
-        var gate = document.getElementById("visitor-gate");
-        gate.style.display = "none";
-        sessionStorage.setItem("site_open", "1");
-      } else {
-        err.style.display = "block";
-        input.value = "";
-      }
-    }
-
-    // Check cached session
-    if (sessionStorage.getItem("site_open") === "1") {
-      var g = document.getElementById("visitor-gate");
-      if (g) g.style.display = "none";
-    }
-
-    // Enter key press
-    document.getElementById("gate-pass-input").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        directUnlock();
-      }
-    });
-
-    function toggleAudio() {
-      var btn = document.getElementById("play-btn");
-      btn.innerText = (btn.innerText === "▶") ? "❚❚" : "▶";
-    }
-  </script>
 </body>
 </html>
