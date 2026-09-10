@@ -3,223 +3,299 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Record | Owner Control Panel</title>
+  <title>Owner Dashboard — UNFINISHED CHAPTER</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .admin-container { max-width: 650px; margin: 2rem auto; padding: 1.5rem; }
-    .form-group { margin-bottom: 1.2rem; }
-    label { display: block; font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 0.4rem; }
-    input, textarea, select {
-      width: 100%; padding: 0.75rem; background: #070a12; border: 1px solid var(--border-neon);
-      border-radius: 8px; color: #fff; font-family: inherit; font-size: 0.9rem;
+    body { background: #030508; padding: 1.5rem; color: #f1f5f9; }
+    .dash-box { max-width: 850px; margin: 0 auto; }
+    .card { background: rgba(10, 15, 26, 0.95); border: 1px solid var(--border-neon); border-radius: 14px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 0 25px rgba(56, 189, 248, 0.15); }
+    h2 { font-family: 'Outfit', sans-serif; color: var(--glow-cyan); letter-spacing: 2px; font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.5rem; }
+    label { display: block; font-size: 0.82rem; color: var(--text-muted); margin-top: 1rem; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px; }
+    input[type="text"], input[type="password"], input[type="email"], textarea, select {
+      width: 100%; padding: 0.8rem; background: #060912; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; color: #fff; font-size: 0.92rem;
     }
-    .panel-block { background: rgba(11, 16, 26, 0.85); border: 1px solid var(--border-neon); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
+    textarea { resize: vertical; min-height: 80px; }
+    .btn-act { margin-top: 1.2rem; width: 100%; padding: 0.8rem; background: var(--glow-cyan); color: #000; border: none; font-weight: 700; border-radius: 8px; cursor: pointer; letter-spacing: 1px; transition: 0.3s; }
+    .btn-act:hover { box-shadow: 0 0 20px var(--glow-cyan); }
+    .status-msg { margin-top: 0.8rem; font-size: 0.85rem; color: var(--glow-cyan); text-align: center; }
   </style>
 </head>
-<body style="background: #030508;">
+<body>
 
-  <div class="admin-container">
-    <!-- AUTH BOX -->
-    <div id="auth-box" class="panel-block">
-      <h2 class="brand-cursive" style="font-size: 2.5rem; margin-bottom: 0.5rem;">The Record</h2>
-      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Owner authentication required.</p>
+  <!-- AUTH SCREEN (ONLY YOU CAN LOG IN) -->
+  <div id="auth-section" class="dash-box" style="margin-top: 10vh; max-width: 420px;">
+    <div class="card" style="text-align: center;">
+      <h1 class="brand-chapter" style="font-size: 1.5rem; margin-bottom: 0.5rem;">UNFINISHED CHAPTER</h1>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem;">Owner Access Portal</p>
       
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="login-email" placeholder="you@email.com" />
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-password" placeholder="••••••••" />
-      </div>
-      <button class="btn-glow" onclick="handleLogin()" style="width: 100%; justify-content: center; cursor: pointer;">Sign In</button>
-      <p id="login-msg" style="color: #f87171; margin-top: 10px; font-size: 0.85rem;"></p>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div id="dashboard-box" style="display: none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-        <div>
-          <h3>Owner Dashboard</h3>
-          <span style="font-size: 0.75rem; color: var(--accent-cyan);">The Record Control Center</span>
-        </div>
-        <div>
-          <a href="index.html" class="btn-glow" style="padding: 0.3rem 0.8rem; font-size:0.75rem;" target="_blank">View Site</a>
-          <button onclick="handleLogout()" class="btn-glow" style="padding: 0.3rem 0.8rem; font-size:0.75rem; background:#dc2626; border-color:#dc2626; cursor:pointer;">Logout</button>
-        </div>
-      </div>
-
-      <!-- 1. CHANGE VISITOR PASSWORD -->
-      <div class="panel-block">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">🔒 Set Visitor Access Password</h4>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">
-          Normal visitors will have to enter this password to view the site.
-        </p>
-        <div class="form-group">
-          <label>New Visitor Password</label>
-          <input id="new-visitor-pass" placeholder="e.g. jinwoo2026" />
-        </div>
-        <button class="btn-glow" onclick="changeVisitorPassword()" style="cursor: pointer;">Update Visitor Password</button>
-      </div>
-
-      <!-- 2. PHOTO & AUDIO UPLOADER -->
-      <div class="panel-block">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">📁 Upload Image / Music</h4>
-        <div class="form-group">
-          <label>Select File</label>
-          <input type="file" id="file-upload" />
-        </div>
-        <div class="form-group">
-          <label>Select Bucket</label>
-          <select id="bucket-select">
-            <option value="images">images (for anime hero / writing cover)</option>
-            <option value="music">music (for audio player)</option>
-          </select>
-        </div>
-        <button class="btn-glow" onclick="uploadFile()" style="cursor: pointer;">Upload</button>
-        <div id="upload-result" style="margin-top: 10px; font-size: 0.8rem; word-break: break-all;"></div>
-      </div>
-
-      <!-- 3. BIO & HERO SETTINGS -->
-      <div class="panel-block">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">✏️ Edit Hero & 4 Info Cards</h4>
-        <div class="form-group"><label>Hero Image URL</label><input id="set-hero-img" placeholder="Paste uploaded image link" /></div>
-        <div class="form-group"><label>Age Card Value</label><input id="set-age" placeholder="16" /></div>
-        <div class="form-group"><label>Education Card Value</label><input id="set-edu" placeholder="12th (PCMB) CHSE Odisha" /></div>
-        <div class="form-group"><label>Home Card Value</label><input id="set-loc" placeholder="Odisha, India" /></div>
-        <div class="form-group"><label>Coding Card Value</label><input id="set-code" placeholder="Beginner" /></div>
-        <div class="form-group"><label>About Paragraph</label><textarea id="set-about" rows="3"></textarea></div>
-        <button class="btn-glow" onclick="saveSettings()" style="cursor: pointer;">Save Information</button>
-      </div>
-
-      <!-- 4. POST WRITING -->
-      <div class="panel-block">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">✍️ Post Writing / Thought</h4>
-        <div class="form-group"><label>Title</label><input id="w-title" /></div>
-        <div class="form-group"><label>Content</label><textarea id="w-content" rows="3"></textarea></div>
-        <div class="form-group"><label>Cover Image URL (Optional)</label><input id="w-cover" /></div>
-        <div class="form-group"><label>Date</label><input id="w-date" placeholder="e.g. Aug 26, 2026" /></div>
-        <button class="btn-glow" onclick="addWriting()" style="cursor: pointer;">Publish Writing</button>
-      </div>
-
-      <!-- 5. ADD MUSIC TRACK -->
-      <div class="panel-block">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 0.8rem;">🎵 Add Song to Player</h4>
-        <div class="form-group"><label>Track Title</label><input id="m-title" /></div>
-        <div class="form-group"><label>Artist Name</label><input id="m-artist" /></div>
-        <div class="form-group"><label>Audio Public URL</label><input id="m-url" /></div>
-        <button class="btn-glow" onclick="addMusic()" style="cursor: pointer;">Add Track</button>
-      </div>
+      <input type="email" id="owner-email" placeholder="Your Supabase Email" />
+      <input type="password" id="owner-password" placeholder="Your Password" style="margin-top: 0.8rem;" />
+      <button class="btn-act" onclick="ownerLogin()">Authenticate As Owner ✦</button>
+      <p id="auth-status" class="status-msg" style="color: #ef4444; display: none;"></p>
     </div>
   </div>
 
-  <script src="supabase-config.js"></script>
+  <!-- CONTROL DASHBOARD -->
+  <div id="dashboard-section" class="dash-box" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <div>
+        <h1 class="brand-chapter" style="font-size: 1.6rem;">Owner Realm</h1>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Manage your digital world in real-time</p>
+      </div>
+      <button onclick="ownerLogout()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;">Logout</button>
+    </div>
+
+    <!-- 1. VISITOR PASSWORD GATE -->
+    <div class="card">
+      <h2>🔒 Visitor Access Key</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Normal visitors will need this password to unlock and view your website.</p>
+      <label>Current Visitor Password</label>
+      <input type="text" id="cfg-visitor-pass" placeholder="e.g. 1234" />
+      <button class="btn-act" onclick="saveVisitorPass()">Update Visitor Passkey</button>
+    </div>
+
+    <!-- 2. STORAGE UPLOADER (PHONE GALLERY / MP3) -->
+    <div class="card">
+      <h2>📁 Phone Storage Direct Uploader</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Select images or songs directly from your device storage to generate live URLs.</p>
+      
+      <label>Select Bucket / Category</label>
+      <select id="upload-bucket">
+        <option value="images">images (for anime hero / thoughts / portraits)</option>
+        <option value="music">music (for soundtrack player)</option>
+      </select>
+
+      <label>Choose File From Phone</label>
+      <input type="file" id="file-uploader" accept="image/*,audio/*" style="margin-top: 0.4rem;" />
+      
+      <button class="btn-act" onclick="uploadPhoneFile()">Upload To Cloud ✦</button>
+      <p id="upload-status" class="status-msg"></p>
+    </div>
+
+    <!-- 3. MUSIC MANAGEMENT (OWNER ONLY) -->
+    <div class="card">
+      <h2>🎵 Add New Soundtrack</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Add songs to the site's floating background player.</p>
+      
+      <label>Song Title</label>
+      <input type="text" id="m-title" placeholder="e.g. Dark Aria (Solo Leveling OST)" />
+      
+      <label>Artist / Tag</label>
+      <input type="text" id="m-artist" placeholder="e.g. Hiroyuki Sawano" />
+      
+      <label>Audio URL (From upload above or web link)</label>
+      <input type="text" id="m-url" placeholder="https://..." />
+      
+      <button class="btn-act" onclick="addSoundtrack()">Publish Song To Player ✦</button>
+      <p id="music-status" class="status-msg"></p>
+    </div>
+
+    <!-- 4. MY WRITINGS ENGINE -->
+    <div class="card">
+      <h2>✍️ Write A New Thought / Chapter</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Will appear instantly on the public website with styled anime typography.</p>
+      
+      <label>Thought / Entry Title</label>
+      <input type="text" id="w-title" placeholder="e.g. Late night grinding..." />
+      
+      <label>Date Tag</label>
+      <input type="text" id="w-date" placeholder="e.g. Sep 10, 2026" />
+      
+      <label>Cover Photo URL (Optional)</label>
+      <input type="text" id="w-img" placeholder="Paste uploaded image URL here" />
+      
+      <label>Content / Thoughts</label>
+      <textarea id="w-content" rows="4" placeholder="Write your unfiltered mind here..."></textarea>
+      
+      <button class="btn-act" onclick="publishWriting()">Publish Thought Live ✦</button>
+      <p id="writing-status" class="status-msg"></p>
+    </div>
+
+    <!-- 5. ADD CUSTOM TITLES & SECTIONS -->
+    <div class="card">
+      <h2>❖ Add New Custom Title / Section</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Create brand-new sections with your own custom heading, quote and story block.</p>
+      
+      <label>Section Title</label>
+      <input type="text" id="cs-title" placeholder="e.g. My Anime Watchlist / Midnight Rules" />
+      
+      <label>Subtitle / Tagline</label>
+      <input type="text" id="cs-sub" placeholder="e.g. What keeps me going when it's hard" />
+      
+      <label>Optional Section Image URL</label>
+      <input type="text" id="cs-img" placeholder="Image URL..." />
+      
+      <label>Section Details / Description</label>
+      <textarea id="cs-content" rows="4" placeholder="Section details..."></textarea>
+      
+      <button class="btn-act" onclick="createCustomSection()">Create & Mount Section Live ✦</button>
+      <p id="custom-status" class="status-msg"></p>
+    </div>
+
+    <!-- 6. EDIT MAIN DETAILS & IMAGE PLACEMENT -->
+    <div class="card">
+      <h2>⚡ Core Settings & Image Placement</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Update hero images, titles, and bio text anytime.</p>
+      
+      <label>Hero Jin-Woo Image URL</label>
+      <input type="text" id="s-hero-img" />
+
+      <label>About Portrait Image URL</label>
+      <input type="text" id="s-about-img" />
+
+      <label>Hero Name</label>
+      <input type="text" id="s-hero-name" />
+
+      <label>Hero Subtitle</label>
+      <input type="text" id="s-hero-subtag" />
+
+      <label>About Bio</label>
+      <textarea id="s-about-desc"></textarea>
+
+      <button class="btn-act" onclick="saveCoreSettings()">Save All Core Changes ✦</button>
+      <p id="core-status" class="status-msg"></p>
+    </div>
+
+  </div>
+
   <script>
-    async function checkSession() {
-      const { data: { session } } = await supabaseClient.auth.getSession();
+    const SUPABASE_URL = "https://xuxwfgrygacqfivvavwk.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eHdmZ3J5Z2FjcWZpdnZhdndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0Mjk3OTMsImV4cCI6MjA4OTAwNTc5M30.6i0v9xMh_vT15L2JvU8tN5l-1dCskkH8-5W0tQOQ9k8";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // AUTH CHECK
+    async function checkAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        document.getElementById('auth-box').style.display = 'none';
-        document.getElementById('dashboard-box').style.display = 'block';
-        loadSettings();
+        document.getElementById("auth-section").style.display = "none";
+        document.getElementById("dashboard-section").style.display = "block";
+        loadDashboardData();
       } else {
-        document.getElementById('auth-box').style.display = 'block';
-        document.getElementById('dashboard-box').style.display = 'none';
+        document.getElementById("auth-section").style.display = "block";
+        document.getElementById("dashboard-section").style.display = "none";
       }
     }
 
-    async function handleLogin() {
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if (error) document.getElementById('login-msg').innerText = error.message;
-      else checkSession();
+    async function ownerLogin() {
+      const email = document.getElementById("owner-email").value;
+      const password = document.getElementById("owner-password").value;
+      const errBox = document.getElementById("auth-status");
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        errBox.innerText = error.message;
+        errBox.style.display = "block";
+      } else {
+        errBox.style.display = "none";
+        checkAuth();
+      }
     }
 
-    async function handleLogout() {
-      await supabaseClient.auth.signOut();
-      location.reload();
+    async function ownerLogout() {
+      await supabase.auth.signOut();
+      checkAuth();
     }
 
-    async function loadSettings() {
-      const { data } = await supabaseClient.from('site_settings').select('*').single();
+    // LOAD DATA
+    async function loadDashboardData() {
+      const { data } = await supabase.from('site_settings').select('*').single();
       if (data) {
-        document.getElementById('set-hero-img').value = data.hero_image || '';
-        document.getElementById('set-age').value = data.age || '';
-        document.getElementById('set-edu').value = data.education || '';
-        document.getElementById('set-loc').value = data.location || '';
-        document.getElementById('set-code').value = data.coding_status || '';
-        document.getElementById('set-about').value = data.about_text || '';
+        document.getElementById("cfg-visitor-pass").value = data.visitor_password || "1234";
+        document.getElementById("s-hero-img").value = data.hero_image || "";
+        document.getElementById("s-about-img").value = data.about_image || "";
+        document.getElementById("s-hero-name").value = data.hero_name || "";
+        document.getElementById("s-hero-subtag").value = data.hero_subtag || "";
+        document.getElementById("s-about-desc").value = data.about_desc || "";
       }
     }
 
-    async function changeVisitorPassword() {
-      const p = document.getElementById('new-visitor-pass').value;
-      if (!p) return alert('Enter a password first');
-      const { error } = await supabaseClient.from('site_settings').update({ footer_text: 'PASS:' + p.trim() }).eq('id', 1);
-      if (!error) {
-        alert('Visitor password updated successfully to: ' + p);
-        document.getElementById('new-visitor-pass').value = '';
-      } else alert(error.message);
+    // 1. SAVE VISITOR PASS
+    async function saveVisitorPass() {
+      const pass = document.getElementById("cfg-visitor-pass").value;
+      const { error } = await supabase.from('site_settings').update({ visitor_password: pass }).eq('id', 1);
+      alert(error ? error.message : "Visitor Passkey Updated Successfully!");
     }
 
-    async function uploadFile() {
-      const file = document.getElementById('file-upload').files[0];
-      const bucket = document.getElementById('bucket-select').value;
-      if (!file) return alert('Select file first');
-      const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-      document.getElementById('upload-result').innerText = 'Uploading...';
-      const { error } = await supabaseClient.storage.from(bucket).upload(fileName, file);
-      if (error) document.getElementById('upload-result').innerText = error.message;
-      else {
-        const { data } = supabaseClient.storage.from(bucket).getPublicUrl(fileName);
-        document.getElementById('upload-result').innerHTML = `Uploaded URL:<br><input value="${data.publicUrl}" readonly onclick="this.select()" />`;
+    // 2. PHONE STORAGE UPLOAD
+    async function uploadPhoneFile() {
+      const fileInput = document.getElementById("file-uploader");
+      const bucket = document.getElementById("upload-bucket").value;
+      const status = document.getElementById("upload-status");
+
+      if (fileInput.files.length === 0) {
+        alert("Please select a file first!");
+        return;
       }
-    }
 
-    async function saveSettings() {
-      const updates = {
-        hero_image: document.getElementById('set-hero-img').value,
-        age: document.getElementById('set-age').value,
-        education: document.getElementById('set-edu').value,
-        location: document.getElementById('set-loc').value,
-        coding_status: document.getElementById('set-code').value,
-        about_text: document.getElementById('set-about').value,
-        updated_at: new Date()
-      };
-      const { error } = await supabaseClient.from('site_settings').update(updates).eq('id', 1);
-      if (!error) alert('Saved successfully!');
-      else alert(error.message);
-    }
+      const file = fileInput.files[0];
+      const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+      status.innerText = "Uploading to realm storage...";
 
-    async function addWriting() {
-      const title = document.getElementById('w-title').value;
-      const content = document.getElementById('w-content').value;
-      const cover_image = document.getElementById('w-cover').value;
-      const date_str = document.getElementById('w-date').value || 'Recent';
-      if (!title || !content) return alert('Fill title and content');
-      const { error } = await supabaseClient.from('writings').insert([{ title, content, cover_image, date_str }]);
-      if (!error) {
-        alert('Writing published!');
-        document.getElementById('w-title').value = '';
-        document.getElementById('w-content').value = '';
+      const { data, error } = await supabase.storage.from(bucket).upload(fileName, file);
+      if (error) {
+        status.innerText = "Upload failed: " + error.message;
+        return;
       }
+
+      const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(fileName);
+      status.innerHTML = `Uploaded! Copy URL:<br/><input type="text" value="${publicUrl}" style="margin-top:5px;" readonly />`;
     }
 
-    async function addMusic() {
-      const title = document.getElementById('m-title').value;
-      const artist = document.getElementById('m-artist').value || 'Unknown';
-      const audio_url = document.getElementById('m-url').value;
-      if (!title || !audio_url) return alert('Fill title and audio URL');
-      const { error } = await supabaseClient.from('music').insert([{ title, artist, audio_url }]);
-      if (!error) {
-        alert('Song added!');
-        document.getElementById('m-title').value = '';
-        document.getElementById('m-url').value = '';
-      }
+    // 3. SOUNDTRACK
+    async function addSoundtrack() {
+      const title = document.getElementById("m-title").value;
+      const artist = document.getElementById("m-artist").value;
+      const audio_url = document.getElementById("m-url").value;
+
+      if (!title || !audio_url) return alert("Title and Audio URL required!");
+
+      const { error } = await supabase.from('music').insert([{ title, artist, audio_url }]);
+      document.getElementById("music-status").innerText = error ? error.message : "Song added to background player!";
     }
 
-    window.addEventListener('DOMContentLoaded', checkSession);
+    // 4. WRITINGS
+    async function publishWriting() {
+      const title = document.getElementById("w-title").value;
+      const date_str = document.getElementById("w-date").value || "Today";
+      const cover_image = document.getElementById("w-img").value;
+      const content = document.getElementById("w-content").value;
+
+      if (!title || !content) return alert("Title and content are required!");
+
+      const { error } = await supabase.from('writings').insert([{ title, date_str, cover_image, content }]);
+      document.getElementById("writing-status").innerText = error ? error.message : "Thought published to website live!";
+    }
+
+    // 5. CUSTOM TITLES & SECTIONS
+    async function createCustomSection() {
+      const section_title = document.getElementById("cs-title").value;
+      const section_subtitle = document.getElementById("cs-sub").value;
+      const image_url = document.getElementById("cs-img").value;
+      const content_text = document.getElementById("cs-content").value;
+
+      if (!section_title || !content_text) return alert("Section title and content required!");
+
+      const { error } = await supabase.from('custom_sections').insert([{ section_title, section_subtitle, image_url, content_text }]);
+      document.getElementById("custom-status").innerText = error ? error.message : "New section added to site navigation & body!";
+    }
+
+    // 6. CORE SETTINGS
+    async function saveCoreSettings() {
+      const hero_image = document.getElementById("s-hero-img").value;
+      const about_image = document.getElementById("s-about-img").value;
+      const hero_name = document.getElementById("s-hero-name").value;
+      const hero_subtag = document.getElementById("s-hero-subtag").value;
+      const about_desc = document.getElementById("s-about-desc").value;
+
+      const { error } = await supabase.from('site_settings').update({
+        hero_image, about_image, hero_name, hero_subtag, about_desc
+      }).eq('id', 1);
+
+      document.getElementById("core-status").innerText = error ? error.message : "Core settings saved and synced!";
+    }
+
+    window.onload = checkAuth;
   </script>
 </body>
 </html>
