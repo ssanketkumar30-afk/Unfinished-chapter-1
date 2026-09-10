@@ -9,46 +9,40 @@
 </head>
 <body>
 
-  <!-- BACKGROUND SEAMLESS ANIME RAIN / BOY VIDEO LOOP -->
-  <div class="video-bg-container">
-    <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200">
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-cyberpunk-city-at-night-with-neon-lights-and-rain-42967-large.mp4" type="video/mp4" />
-    </video>
-  </div>
-  <div class="video-bg-overlay"></div>
-
-  <!-- AESTHETIC VISITOR GATE -->
+  <!-- VISITOR GATE -->
   <div id="visitor-gate">
     <div class="gate-box">
       <span class="gate-badge">System Awakening</span>
       <h2 class="brand-chapter" style="font-size: 2rem; margin: 0.4rem 0;">UNFINISHED CHAPTER</h2>
-      <p style="font-size: 0.85rem; color: var(--text-muted);">Enter the passkey to awaken the realm.</p>
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem;">Enter the passkey to awaken the realm.</p>
       
       <input type="password" id="gate-pass-input" placeholder="••••" autocomplete="off" />
       
-      <button type="button" class="btn-gate" id="enter-btn">
-        Awaken Realm ✦
+      <button type="button" class="btn-gate" id="enter-btn" onclick="unlockSite()">
+        AWAKEN REALM ✦
       </button>
       
-      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 12px; display: none; font-weight: 500;">Access Denied: Invalid Passkey</p>
+      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 12px; display: none; font-weight: 500;">
+        Access Denied: Invalid Passkey
+      </p>
       
       <div style="margin-top: 1.8rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.2rem;">
-        <a href="owner.html" style="color: var(--glow-cyan); font-size: 0.82rem; text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase;">
-          ⚙️ Owner Login Portal
+        <a href="owner.html" style="color: #38bdf8; font-size: 0.82rem; text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase;">
+          ⚙️ OWNER LOGIN PORTAL
         </a>
       </div>
     </div>
   </div>
 
   <!-- FLOATING MUSIC PLAYER -->
-  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 13, 26, 0.9); border: 1px solid var(--border-neon); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
-    <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: var(--glow-cyan); font-size: 1.2rem; cursor: pointer;">▶</button>
+  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 13, 26, 0.9); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
+    <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: #38bdf8; font-size: 1.2rem; cursor: pointer;">▶</button>
     <div style="display: flex; flex-direction: column;">
-      <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Soundtrack</span>
-      <span id="current-track-artist" style="font-size: 0.65rem; color: var(--text-muted);">Sanket's Playlist</span>
+      <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Theme Audio</span>
+      <span id="current-track-artist" style="font-size: 0.65rem; color: #94a3b8;">Sanket's Playlist</span>
     </div>
-    <button onclick="nextAudio()" style="background: none; border: none; color: var(--text-muted); font-size: 0.9rem; cursor: pointer;">⏭</button>
-    <audio id="audio-element"></audio>
+    <button onclick="nextAudio()" style="background: none; border: none; color: #94a3b8; font-size: 0.9rem; cursor: pointer;">⏭</button>
+    <audio id="audio-element" loop preload="auto"></audio>
   </div>
 
   <!-- MAIN APP LAYOUT -->
@@ -57,8 +51,8 @@
     <!-- LEFT SIDEBAR -->
     <aside class="sidebar">
       <div>
-        <h1 class="brand-chapter" id="sidebar-title">UNFINISHED CHAPTER</h1>
-        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Not just a website, but a record of my thoughts, journey and dreams.</p>
+        <h1 class="brand-chapter" id="sidebar-title" style="font-size: 1.35rem;">UNFINISHED CHAPTER</h1>
+        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 6px;">Not just a website, but a record of my thoughts, journey and dreams.</p>
         
         <nav class="side-nav">
           <a href="#home" class="side-link active"><span>✦</span> Home</a>
@@ -67,14 +61,13 @@
           <a href="#projects" class="side-link"><span>💻</span> Projects</a>
           <a href="#writings" class="side-link"><span>✍️</span> Writings</a>
           <a href="#goals" class="side-link"><span>🎯</span> Goals</a>
-          <span id="custom-nav-links"></span>
         </nav>
       </div>
 
       <div>
-        <p style="font-size: 0.7rem; color: var(--text-muted); line-height: 1.4;">Same person.<br/>Different chapters.<br/>Still writing...</p>
-        <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--glow-cyan); margin-top: 4px;">Sanket</p>
-        <a href="owner.html" style="display: inline-block; font-size: 0.75rem; color: var(--glow-cyan); text-decoration: none; margin-top: 8px; border: 1px solid rgba(56,189,248,0.3); padding: 3px 8px; border-radius: 6px;">⚙️ Owner Dashboard</a>
+        <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4;">Same person.<br/>Different chapters.<br/>Still writing...</p>
+        <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #38bdf8; margin-top: 4px;">Sanket</p>
+        <a href="owner.html" style="display: inline-block; font-size: 0.75rem; color: #38bdf8; text-decoration: none; margin-top: 8px; border: 1px solid rgba(56,189,248,0.3); padding: 4px 10px; border-radius: 6px;">⚙️ Owner Dashboard</a>
       </div>
     </aside>
 
@@ -83,7 +76,7 @@
       
       <!-- HERO SECTION -->
       <section id="home" class="hero-photo2">
-        <div class="hero-jinwoo-art" id="hero-img-box"></div>
+        <div class="hero-jinwoo-art" id="hero-img-box" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200');"></div>
         <div class="korean-tag">
           <h4>성진우</h4>
           <span>Sung Jin Woo</span>
@@ -96,7 +89,7 @@
           </div>
           <h1 class="hero-name" id="hero-name">Sanket Kumar Sahu</h1>
           <p class="hero-subtag" id="hero-subtag">A dreamer with a broken past, building a better future.</p>
-          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;" id="hero-desc">
+          <p style="color: #94a3b8; font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;" id="hero-desc">
             This is my digital space — where I share my thoughts, progress, ideas and the things I love.
           </p>
           <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; margin-bottom: 1.8rem;" id="hero-cursive">
@@ -124,35 +117,35 @@
               
               <div class="info-cards-4">
                 <div class="mini-box">
-                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">👤</div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Age</div>
+                  <div style="color: #38bdf8; font-size: 1.1rem;">👤</div>
+                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Age</div>
                   <div style="font-weight: 700; font-size: 1.1rem;" id="info-age">17</div>
-                  <div style="font-size: 0.65rem; color: var(--text-muted);" id="info-age-sub">(May 10, 2009)</div>
+                  <div style="font-size: 0.65rem; color: #94a3b8;">(May 10, 2009)</div>
                 </div>
 
                 <div class="mini-box">
-                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">🎓</div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Education</div>
+                  <div style="color: #38bdf8; font-size: 1.1rem;">🎓</div>
+                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Education</div>
                   <div style="font-weight: 700; font-size: 1.1rem;" id="info-edu">12th (PCMB)</div>
-                  <div style="font-size: 0.65rem; color: var(--text-muted);" id="info-edu-sub">CHSE Odisha</div>
+                  <div style="font-size: 0.65rem; color: #94a3b8;">CHSE Odisha</div>
                 </div>
 
                 <div class="mini-box">
-                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">📍</div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Home</div>
+                  <div style="color: #38bdf8; font-size: 1.1rem;">📍</div>
+                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Home</div>
                   <div style="font-weight: 700; font-size: 1.1rem;" id="info-home">Odisha, India</div>
-                  <div style="font-size: 0.65rem; color: var(--text-muted);">Native</div>
+                  <div style="font-size: 0.65rem; color: #94a3b8;">Native</div>
                 </div>
 
                 <div class="mini-box">
-                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">💻</div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Coding</div>
+                  <div style="color: #38bdf8; font-size: 1.1rem;">💻</div>
+                  <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Coding</div>
                   <div style="font-weight: 700; font-size: 1.1rem;" id="info-code">Beginner</div>
-                  <div style="font-size: 0.65rem; color: var(--text-muted);" id="info-code-sub">(Learning...)</div>
+                  <div style="font-size: 0.65rem; color: #94a3b8;">(Learning...)</div>
                 </div>
               </div>
 
-              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--glow-cyan); margin-top: 1.5rem;" id="about-subquote">
+              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #38bdf8; margin-top: 1.5rem;" id="about-subquote">
                 Still a lot to learn...
               </p>
             </div>
@@ -168,78 +161,122 @@
 
         <!-- JOURNEY -->
         <section id="journey">
-          <h2 class="sec-title-cursive" id="journey-title">My Journey</h2>
-          <p class="sec-sub" id="journey-desc">From zero to something...</p>
+          <h2 class="sec-title-cursive">My Journey</h2>
+          <p class="sec-sub">From zero to something...</p>
 
           <div class="journey-banner">
-            <div class="journey-track-2" id="journey-node-container"></div>
+            <div class="journey-track-2" id="journey-node-container">
+              <div class="j-node">
+                <div class="j-dot"></div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Awakening</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">Class 10th Completed</div>
+              </div>
+              <div class="j-node">
+                <div class="j-dot"></div>
+                <div style="font-weight: 700; font-size: 0.95rem;">The Grind</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">12th Board Exams (PCMB)</div>
+              </div>
+              <div class="j-node">
+                <div class="j-dot"></div>
+                <div style="font-weight: 700; font-size: 0.95rem;">Monarch Rise</div>
+                <div style="font-size: 0.75rem; color: #94a3b8;">B.Tech CSE & Coding Mastery</div>
+              </div>
+            </div>
           </div>
         </section>
 
         <!-- PROJECTS & WRITINGS -->
         <section id="projects-and-writings">
           <div class="split-sections">
-            <div id="projects">
+            <div>
               <h3 class="sec-title-cursive" style="font-size: 2.2rem;">Featured Projects</h3>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Small steps, big dreams.</p>
-              <div id="projects-list-container"></div>
+              <div id="projects-list-container">
+                <div class="card-item">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <h4 style="font-size: 1.05rem; font-weight: 600;">The Record — Digital Space</h4>
+                    <span class="badge">Live</span>
+                  </div>
+                  <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px;">Personal website built with custom Solo Leveling anime aesthetic.</p>
+                  <div><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">Supabase</span></div>
+                </div>
+              </div>
             </div>
 
-            <div id="writings">
+            <div>
               <h3 class="sec-title-cursive" style="font-size: 2.2rem;">My Writings</h3>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Thoughts, feelings, & random ideas.</p>
-              <div id="writings-list-container"></div>
+              <div id="writings-list-container">
+                <div class="card-item">
+                  <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">Why I Won't Stop Grinding</h4>
+                  <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0;">No matter how hard it gets, every level requires a new version of yourself.</p>
+                  <span style="font-size: 0.7rem; color: #38bdf8;">Chapter 1</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- GOALS -->
         <section id="goals">
-          <h2 class="sec-title-cursive" id="goals-title">Goals</h2>
-          <p class="sec-sub" id="goals-desc">Big dreams. Same me.</p>
+          <h2 class="sec-title-cursive">Goals</h2>
+          <p class="sec-sub">Big dreams. Same me.</p>
 
           <div class="goals-banner">
-            <div id="goals-list-container"></div>
+            <div>
+              <div class="goal-entry"><span style="color: #38bdf8;">◉</span> Score 90%+ in 12th Board Exams</div>
+              <div class="goal-entry"><span style="color: #38bdf8;">◉</span> Master Computer Science & Software Dev</div>
+              <div class="goal-entry"><span style="color: #38bdf8;">◉</span> Reach top tier software engineering</div>
+            </div>
             <div style="text-align: right; position: relative;">
-              <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; line-height: 1.4;" id="goals-quote">
+              <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; line-height: 1.4;">
                 “I'm not chasing success, I'm chasing the version of myself that I'll be proud to look back at.”
               </p>
-              <div style="position: absolute; right: -10px; top: -30px; font-size: 0.85rem; writing-mode: vertical-rl; letter-spacing: 4px; color: var(--glow-cyan); opacity: 0.4;">
-                まだ終わりじゃない
-              </div>
             </div>
           </div>
         </section>
 
-        <div id="custom-sections-wrapper"></div>
-
         <footer style="padding: 2.5rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
           <h4 class="brand-chapter" style="font-size: 1.1rem;">UNFINISHED CHAPTER</h4>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Crafted with discipline by Sanket</p>
+          <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 6px;">Crafted with discipline by Sanket</p>
         </footer>
 
       </div>
     </main>
   </div>
 
+  <!-- SCRIPT ENGINE -->
   <script>
     const SUPABASE_URL = "https://xuxwfgrygacqfivvavwk.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eHdmZ3J5Z2FjcWZpdnZhdndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0Mjk3OTMsImV4cCI6MjA4OTAwNTc5M30.6i0v9xMh_vT15L2JvU8tN5l-1dCskkH8-5W0tQOQ9k8";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let siteSettings = { visitor_password: "1234" };
+    let currentPass = "1234";
     let musicPlaylist = [];
-    let currentTrackIndex = 0;
+    let currentTrackIdx = 0;
 
-    // IMMEDIATE UNLOCK HANDLER
-    function executeUnlock() {
-      const input = document.getElementById("gate-pass-input");
+    // AUDIO TRIGGER (BYPASS MOBILE RESTRICTION)
+    function playAudioOnGesture() {
+      const audio = document.getElementById("audio-element");
+      if (audio && audio.paused && audio.src) {
+        audio.play().then(() => {
+          document.getElementById("play-btn").innerText = "❚❚";
+        }).catch(() => {});
+      }
+    }
+
+    // Touch ya tap hote hi sound trigger arm ho jaye
+    document.getElementById("gate-pass-input").addEventListener("focus", playAudioOnGesture, { once: true });
+    document.getElementById("gate-pass-input").addEventListener("touchstart", playAudioOnGesture, { once: true });
+
+    // UNLOCK REALM
+    function unlockSite() {
+      playAudioOnGesture();
+      const val = document.getElementById("gate-pass-input").value.trim();
       const err = document.getElementById("gate-err");
-      const entered = input.value.trim();
-      const actual = String(siteSettings.visitor_password || "1234").trim();
 
-      if (entered === actual || entered === "1234") {
-        sessionStorage.setItem("unlocked_chapter", "yes");
+      if (val === currentPass || val === "1234") {
+        sessionStorage.setItem("site_unlocked", "true");
         const gate = document.getElementById("visitor-gate");
         gate.style.opacity = "0";
         setTimeout(() => {
@@ -247,132 +284,86 @@
         }, 400);
       } else {
         err.style.display = "block";
-        input.focus();
+        document.getElementById("gate-pass-input").value = "";
       }
     }
 
-    document.getElementById("enter-btn").addEventListener("click", executeUnlock);
-    document.getElementById("gate-pass-input").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") executeUnlock();
+    document.getElementById("gate-pass-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") unlockSite();
     });
 
-    if (sessionStorage.getItem("unlocked_chapter") === "yes") {
+    if (sessionStorage.getItem("site_unlocked") === "true") {
       document.getElementById("visitor-gate").style.display = "none";
     }
 
-    // LOAD SUPABASE DATA
-    async function loadSite() {
+    // SUPABASE DATA SYNC
+    async function syncSite() {
       try {
         const { data: set } = await supabase.from('site_settings').select('*').single();
         if (set) {
-          siteSettings = set;
-          document.getElementById("sidebar-title").innerText = set.site_title || "UNFINISHED CHAPTER";
-          document.getElementById("hero-greeting").innerText = set.hero_greeting || "Hello, I'm";
-          document.getElementById("hero-name").innerText = set.hero_name || "Sanket Kumar Sahu";
-          document.getElementById("hero-subtag").innerText = set.hero_subtag || "";
-          document.getElementById("hero-desc").innerText = set.hero_desc || "";
-          document.getElementById("hero-cursive").innerText = set.hero_cursive || "";
-          document.getElementById("hero-quote").innerText = set.hero_quote || "";
-          document.getElementById("hero-quote-author").innerText = set.hero_quote_author || "";
-          document.getElementById("about-desc").innerText = set.about_desc || "";
-          document.getElementById("about-quote").innerText = set.about_quote || "";
-          document.getElementById("about-subquote").innerText = set.about_subquote || "";
-          document.getElementById("info-age").innerText = set.age_val || "17";
-          document.getElementById("info-age-sub").innerText = set.age_sub || "";
-          document.getElementById("info-edu").innerText = set.edu_val || "";
-          document.getElementById("info-edu-sub").innerText = set.edu_sub || "";
-          document.getElementById("info-home").innerText = set.home_val || "";
-          document.getElementById("info-code").innerText = set.code_val || "";
-          document.getElementById("info-code-sub").innerText = set.code_sub || "";
-          document.getElementById("journey-title").innerText = set.journey_title || "My Journey";
-          document.getElementById("journey-desc").innerText = set.journey_desc || "";
-          document.getElementById("goals-title").innerText = set.goals_title || "Goals";
-          document.getElementById("goals-desc").innerText = set.goals_desc || "";
-          document.getElementById("goals-quote").innerText = set.goals_quote || "";
-
-          if (set.hero_image) {
-            document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
-          }
-          if (set.about_image) {
-            document.getElementById("about-side-img").src = set.about_image;
-          }
+          if (set.visitor_password) currentPass = set.visitor_password;
+          if (set.hero_image) document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
+          if (set.about_image) document.getElementById("about-side-img").src = set.about_image;
+          if (set.hero_name) document.getElementById("hero-name").innerText = set.hero_name;
+          if (set.hero_subtag) document.getElementById("hero-subtag").innerText = set.hero_subtag;
+          if (set.hero_desc) document.getElementById("hero-desc").innerText = set.hero_desc;
         }
 
-        // Journey
-        const { data: jn } = await supabase.from('journey').select('*').order('sort_order', { ascending: true });
-        if (jn && jn.length > 0) {
-          document.getElementById("journey-node-container").innerHTML = jn.map(j => `
-            <div class="j-node">
-              <div class="j-dot"></div>
-              <div style="font-weight: 700; font-size: 0.95rem;">${j.phase}</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">${j.timeline}</div>
-              ${j.description ? `<div style="font-size: 0.7rem; color: var(--glow-cyan); margin-top: 2px;">${j.description}</div>` : ''}
-            </div>
-          `).join('');
+        // Load Music
+        const { data: ms } = await supabase.from('music').select('*').order('created_at', { ascending: false });
+        if (ms && ms.length > 0) {
+          musicPlaylist = ms;
+          loadTrack(0);
         }
 
-        // Projects
-        const { data: pj } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
-        if (pj) {
-          document.getElementById("projects-list-container").innerHTML = pj.map(p => `
-            <div class="card-item">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <h4 style="font-size: 1.05rem; font-weight: 600;">${p.title}</h4>
-                <span class="badge">${p.status || 'Active'}</span>
-              </div>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">${p.description}</p>
-              <div>${p.tags.split(',').map(t => `<span class="badge" style="background: rgba(255,255,255,0.06); color: #cbd5e1;">${t.trim()}</span>`).join('')}</div>
-            </div>
-          `).join('');
-        }
-
-        // Writings
+        // Load Writings
         const { data: wr } = await supabase.from('writings').select('*').order('created_at', { ascending: false });
-        const wrWrap = document.getElementById("writings-list-container");
         if (wr && wr.length > 0) {
+          const wrWrap = document.getElementById("writings-list-container");
           wrWrap.innerHTML = wr.map(w => `
-            <div class="card-item" style="display: flex; gap: 14px; align-items: center;">
-              ${w.cover_image ? `<img src="${w.cover_image}" style="width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-neon);" />` : ''}
-              <div>
-                <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">${w.title}</h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0;">${w.content}</p>
-                <span style="font-size: 0.7rem; color: var(--glow-cyan);">${w.date_str}</span>
-              </div>
-            </div>
-          `).join('');
-        } else {
-          wrWrap.innerHTML = `<div class="card-item" style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">No writings yet. Post from owner dashboard!</div>`;
-        }
-
-        // Goals
-        const { data: gl } = await supabase.from('goals').select('*').order('sort_order', { ascending: true });
-        if (gl) {
-          document.getElementById("goals-list-container").innerHTML = gl.map(g => `
-            <div class="goal-entry">
-              <span style="color: ${g.completed ? 'var(--glow-cyan)' : 'var(--text-muted)'}; font-size: 1rem;">${g.completed ? '◉' : '○'}</span>
-              <span style="${g.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${g.goal_text}</span>
+            <div class="card-item">
+              <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">${w.title}</h4>
+              <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0;">${w.content}</p>
+              <span style="font-size: 0.7rem; color: #38bdf8;">${w.date_str}</span>
             </div>
           `).join('');
         }
+      } catch (e) {
+        console.log("Sync error:", e);
+      }
+    }
 
-        // Custom Sections
-        const { data: cs } = await supabase.from('custom_sections').select('*').order('created_at', { ascending: true });
-        if (cs && cs.length > 0) {
-          const navWrap = document.getElementById("custom-nav-links");
-          const secWrap = document.getElementById("custom-sections-wrapper");
-          cs.forEach((sec, idx) => {
-            const secId = `custom-sec-${idx}`;
-            const a = document.createElement("a");
-            a.href = `#${secId}`;
-            a.className = "side-link";
-            a.innerHTML = `<span>❖</span> ${sec.section_title}`;
-            navWrap.appendChild(a);
+    function loadTrack(idx) {
+      if (!musicPlaylist[idx]) return;
+      currentTrackIdx = idx;
+      const audio = document.getElementById("audio-element");
+      audio.src = musicPlaylist[idx].audio_url;
+      document.getElementById("current-track-title").innerText = musicPlaylist[idx].title;
+      document.getElementById("current-track-artist").innerText = musicPlaylist[idx].artist || "Sanket";
+    }
 
-            const block = document.createElement("section");
-            block.id = secId;
-            block.className = "custom-section-block";
-            block.innerHTML = `
-              <h2 class="sec-title-cursive">${sec.section_title}</h2>
-              ${sec.section_subtitle ? `<p class="sec-sub">${sec.section_subtitle}</p>` : ''}
-              <div class="card-item" style="padding: 1.8rem;">
-                ${sec.image_url ? `<img src="${sec.image_url}" style="max-height: 280px; width: 100%; object-fit: cover; border-radius: 12px; marg
+    function toggleAudio() {
+      const audio = document.getElementById("audio-element");
+      const btn = document.getElementById("play-btn");
+      if (audio.paused) {
+        audio.play();
+        btn.innerText = "❚❚";
+      } else {
+        audio.pause();
+        btn.innerText = "▶";
+      }
+    }
+
+    function nextAudio() {
+      if (musicPlaylist.length === 0) return;
+      currentTrackIdx = (currentTrackIdx + 1) % musicPlaylist.length;
+      loadTrack(currentTrackIdx);
+      const audio = document.getElementById("audio-element");
+      audio.play();
+      document.getElementById("play-btn").innerText = "❚❚";
+    }
+
+    window.onload = syncSite;
+  </script>
+</body>
+</html>
