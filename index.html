@@ -3,237 +3,325 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unfinished | Sanket Kumar Sahu</title>
+  <title>The Record | Sanket Kumar Sahu</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css" />
-  <!-- Supabase JS Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav>
-    <div class="container nav-wrap">
-      <div class="brand">✨ UNFINISHED</div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#journey">Journey</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#writings">Writings</a></li>
-        <li><a href="#music">Music</a></li>
-      </ul>
-      <a href="owner.html" class="owner-btn">Owner Login</a>
+  <!-- 1. VISITOR PASSWORD GATE -->
+  <div id="visitor-gate">
+    <div class="gate-card">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+      <h3 style="font-size: 1.4rem;">The Record is Locked</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 6px;">Enter visitor access password to unlock</p>
+      <input type="password" id="gate-pass-input" placeholder="Access Password" />
+      <button class="btn-glow" onclick="unlockSite()" style="width: 100%; justify-content: center;">Enter Space →</button>
+      <p id="gate-error" style="color: #f87171; font-size: 0.8rem; margin-top: 10px;"></p>
     </div>
-  </nav>
+  </div>
 
-  <!-- Hero Section -->
-  <header class="hero" id="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="container">
-      <div class="hero-content">
-        <p class="tag-subtitle" id="hero-sub">NOT A PERFECT STORY — JUST A REAL ONE</p>
-        <h1 id="hero-title">Unfinished</h1>
-        <p class="hero-desc" id="hero-desc">Loading thoughts...</p>
-        <a href="#journey" class="btn-primary">Explore My Journey →</a>
-        <div class="quote-box" id="hero-quote">"Even if I die, I'll keep moving forward, that's who I am."</div>
+  <!-- 2. PHOTO 2 APP LAYOUT -->
+  <div class="app-layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <h2 class="brand-cursive">The Record</h2>
+        <p class="brand-desc">Not just a website, but a record of my thoughts, journey and dreams.</p>
+        
+        <nav class="side-nav">
+          <a href="#home" class="side-link active"><span>🏠</span> Home</a>
+          <a href="#about" class="side-link"><span>👤</span> About</a>
+          <a href="#journey" class="side-link"><span>🗺️</span> Journey</a>
+          <a href="#projects" class="side-link"><span>💻</span> Projects</a>
+          <a href="#writings" class="side-link"><span>✍️</span> Writings</a>
+          <a href="#goals" class="side-link"><span>🎯</span> Goals</a>
+          <a href="#music" class="side-link"><span>🎵</span> Soundtrack</a>
+        </nav>
       </div>
-    </div>
-  </header>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div>
-          <span class="section-tag">About Me</span>
-          <h2 class="section-title">Who Am <span class="highlight">I?</span></h2>
-          <p id="about-text" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
-          <p style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #7dd3fc;">"Still a work in progress..."</p>
+      <div class="side-footer">
+        <p>Same person • Different chapters • Still writing...</p>
+        <a href="owner.html" style="display:inline-block; margin-top:10px; color:var(--accent-cyan); font-size:0.75rem; text-decoration:none;">⚙ Owner Login</a>
+      </div>
+    </aside>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <main class="main-wrapper">
+
+      <!-- HERO SECTION -->
+      <section class="hero-photo2" id="home">
+        <div class="hero-bg-anime" id="hero-anime-art"></div>
+        
+        <!-- Korean Accents -->
+        <div class="korean-tag">
+          <h4>성진우</h4>
+          <span>Sung Jin Woo</span>
         </div>
 
-        <div class="glass-card">
-          <div class="info-row"><span>Name</span><strong id="info-name">-</strong></div>
-          <div class="info-row"><span>Age</span><strong id="info-age">-</strong></div>
-          <div class="info-row"><span>Location</span><strong id="info-loc">-</strong></div>
-          <div class="info-row"><span>Education</span><strong id="info-edu">-</strong></div>
-          <div class="info-row"><span>Coding</span><strong id="info-coding">-</strong></div>
+        <div class="hero-body">
+          <div class="hello-badge">🌐 Hello, I'm</div>
+          <h1 class="hero-name" id="hero-name-label">Sanket Kumar Sahu</h1>
+          <p class="hero-subtag">A dreamer with a broken past, building a better future.</p>
+          <p class="hero-para" id="hero-desc-label">
+            This is my digital space — where I share my thoughts, progress, ideas and the things I love.
+          </p>
+          <p style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #93c5fd; margin-bottom: 1.5rem;">
+            It's not perfect, but it's real.
+          </p>
+          <a href="#journey" class="btn-glow">Explore My Journey →</a>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Journey Section -->
-  <section id="journey" style="background: rgba(10, 14, 23, 0.5);">
-    <div class="container">
-      <span class="section-tag">My Path</span>
-      <h2 class="section-title">From <span class="highlight">Zero to Hero</span></h2>
-      <div class="timeline-list" id="journey-list">
-        <!-- Loaded dynamically from Supabase -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects">
-    <div class="container">
-      <span class="section-tag">Creations</span>
-      <h2 class="section-title">Ideas in <span class="highlight">Progress</span></h2>
-      <div class="cards-3" id="projects-list">
-        <!-- Loaded dynamically from Supabase -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Writings / Thoughts Section -->
-  <section id="writings" style="background: rgba(10, 14, 23, 0.5);">
-    <div class="container">
-      <span class="section-tag">My Mind</span>
-      <h2 class="section-title">Thoughts & <span class="highlight">Writings</span></h2>
-      <div class="cards-3" id="writings-list">
-        <!-- Loaded dynamically from Supabase -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Goals Section -->
-  <section id="goals">
-    <div class="container">
-      <span class="section-tag">Aspirations</span>
-      <h2 class="section-title">Goals & <span class="highlight">Dreams</span></h2>
-      <div class="about-grid">
-        <div class="glass-card">
-          <h3 style="margin-bottom: 1rem; color: var(--accent-cyan);">Recent Steps</h3>
-          <div id="recent-goals"></div>
+        <div class="hero-quote-bottom">
+          <p id="hero-quote-text">“Even if I start from the very bottom... I'll still become the strongest.”</p>
+          <span>— Sung Jin Woo</span>
         </div>
-        <div class="glass-card">
-          <h3 style="margin-bottom: 1rem; color: var(--accent-blue);">Future Targets</h3>
-          <div id="future-goals"></div>
-        </div>
+      </section>
+
+      <div class="content-container">
+
+        <!-- ABOUT ME SECTION -->
+        <section id="about">
+          <h2 class="sec-title-cursive">About Me</h2>
+          
+          <div class="about-2col">
+            <div>
+              <p style="color: var(--text-muted); font-size: 0.95rem;" id="about-text-label">
+                I'm just a normal guy with big dreams. I love anime, coding, and exploring new things.
+                I'm not perfect, but I'm trying to be a better version of myself, day by day.
+              </p>
+
+              <!-- 4 MINI CARDS -->
+              <div class="info-cards-4">
+                <div class="mini-box">
+                  <div class="icon">👤</div>
+                  <label>Age</label>
+                  <strong id="card-age">16</strong>
+                </div>
+                <div class="mini-box">
+                  <div class="icon">🎓</div>
+                  <label>Education</label>
+                  <strong id="card-edu">12th (PCMB)</strong>
+                </div>
+                <div class="mini-box">
+                  <div class="icon">📍</div>
+                  <label>Home</label>
+                  <strong id="card-loc">Odisha, India</strong>
+                </div>
+                <div class="mini-box">
+                  <div class="icon">💻</div>
+                  <label>Coding</label>
+                  <strong id="card-code">Beginner</strong>
+                </div>
+              </div>
+
+              <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #93c5fd; margin-top: 1.5rem;">
+                "Still a lot to learn..."
+              </div>
+            </div>
+
+            <div class="about-right-art">
+              <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800" id="about-art-img" alt="Jinwoo aesthetic" />
+              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #e2e8f0; margin-top: 0.8rem;">
+                "A little progress each day adds up to big results."
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- MY JOURNEY -->
+        <section id="journey">
+          <h2 class="sec-title-cursive">My Journey</h2>
+          <p class="sec-sub">From zero to something...</p>
+
+          <div class="journey-banner">
+            <div class="journey-track-2" id="journey-track-box">
+              <!-- Dynamically populated from Supabase -->
+            </div>
+          </div>
+        </section>
+
+        <!-- PROJECTS & WRITINGS -->
+        <section id="projects">
+          <div class="split-sections">
+            <!-- Projects Left -->
+            <div>
+              <h2 class="sec-title-cursive">Featured Projects</h2>
+              <p class="sec-sub">Small steps, big dreams.</p>
+              <div id="projects-box"></div>
+            </div>
+
+            <!-- Writings Right -->
+            <div id="writings">
+              <h2 class="sec-title-cursive">My Writings</h2>
+              <p class="sec-sub">Thoughts, feelings, & random ideas.</p>
+              <div id="writings-box"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GOALS HORIZONTAL BANNER -->
+        <section id="goals">
+          <h2 class="sec-title-cursive">Goals</h2>
+          <p class="sec-sub">Big dreams. Same me.</p>
+
+          <div class="goals-banner">
+            <div id="goals-list-box">
+              <!-- Dynamically populated from Supabase -->
+            </div>
+            <div style="text-align: right;">
+              <p style="font-family: 'Caveat', cursive; font-size: 2.1rem; line-height: 1.2; color: #bae6fd;">
+                "I'm not chasing success, I'm chasing the version of myself that I'll be proud to look back at."
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SOUNDTRACK -->
+        <section id="music">
+          <h2 class="sec-title-cursive">Soundtrack</h2>
+          <p class="sec-sub">Background ambiance & anime vibes.</p>
+
+          <div class="music-box">
+            <h4 id="current-track-name" style="color: var(--accent-cyan);">Pick a track from below</h4>
+            <audio id="main-audio" controls></audio>
+            <div id="songs-list-box" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 8px;"></div>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer style="text-align: center; padding: 2.5rem 0; color: var(--text-muted); font-size: 0.85rem;">
+          <p class="brand-cursive" style="font-size: 1.8rem; color: #fff;">The Record</p>
+          <p>Created with ❤️ by Sanket</p>
+        </footer>
+
       </div>
-    </div>
-  </section>
+    </main>
+  </div>
 
-  <!-- Music Player Section -->
-  <section id="music" style="background: rgba(10, 14, 23, 0.5);">
-    <div class="container">
-      <span class="section-tag">Vibes</span>
-      <h2 class="section-title">The <span class="highlight">Soundtrack</span></h2>
-      <div class="glass-card music-player-wrap">
-        <h4 id="now-playing" style="color: var(--accent-cyan);">Select a track to play</h4>
-        <audio id="audio-element" controls style="width:100%"></audio>
-        <div class="song-list" id="song-list">
-          <!-- Loaded dynamically from Supabase -->
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer style="text-align: center; padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.05);">
-    <p id="footer-text" style="color: var(--text-muted); font-size: 0.85rem;">Unfinished</p>
-  </footer>
-
-  <!-- Scripts -->
+  <!-- SUPABASE SCRIPTS -->
   <script src="supabase-config.js"></script>
   <script>
-    async function loadPublicData() {
+    // VISITOR PASSWORD LOGIC
+    let siteGatePassword = "1234"; // Default password
+
+    function unlockSite() {
+      const entered = document.getElementById('gate-pass-input').value;
+      if (entered === siteGatePassword) {
+        document.getElementById('visitor-gate').style.display = 'none';
+        sessionStorage.setItem('the_record_unlocked', 'true');
+      } else {
+        document.getElementById('gate-error').innerText = "Incorrect Password. Please try again.";
+      }
+    }
+
+    if (sessionStorage.getItem('the_record_unlocked') === 'true') {
+      document.getElementById('visitor-gate').style.display = 'none';
+    }
+
+    async function loadData() {
       try {
-        // 1. Site Settings
-        const { data: settings } = await supabaseClient.from('site_settings').select('*').single();
-        if (settings) {
-          document.getElementById('hero-title').innerText = settings.hero_title;
-          document.getElementById('hero-sub').innerText = settings.hero_subtitle;
-          document.getElementById('hero-desc').innerText = settings.hero_desc;
-          document.getElementById('hero-quote').innerText = `"${settings.quote}"`;
-          document.getElementById('about-text').innerText = settings.about_text;
-          document.getElementById('info-name').innerText = settings.name;
-          document.getElementById('info-age').innerText = settings.age;
-          document.getElementById('info-loc').innerText = settings.location;
-          document.getElementById('info-edu').innerText = settings.education;
-          document.getElementById('info-coding').innerText = settings.coding_status;
-          document.getElementById('footer-text').innerText = settings.footer_text;
-          if (settings.hero_image) {
-            document.getElementById('hero-section').style.backgroundImage = `url('${settings.hero_image}')`;
+        // 1. Settings & Custom Visitor Password
+        const { data: s } = await supabaseClient.from('site_settings').select('*').single();
+        if (s) {
+          if (s.name) document.getElementById('hero-name-label').innerText = s.name;
+          if (s.hero_desc) document.getElementById('hero-desc-label').innerText = s.hero_desc;
+          if (s.quote) document.getElementById('hero-quote-text').innerText = `“${s.quote}”`;
+          if (s.about_text) document.getElementById('about-text-label').innerText = s.about_text;
+          if (s.age) document.getElementById('card-age').innerText = s.age;
+          if (s.education) document.getElementById('card-edu').innerText = s.education;
+          if (s.location) document.getElementById('card-loc').innerText = s.location;
+          if (s.coding_status) document.getElementById('card-code').innerText = s.coding_status;
+          if (s.hero_image) {
+            document.getElementById('hero-anime-art').style.backgroundImage = `url('${s.hero_image}')`;
+          }
+          // Read custom visitor password if saved
+          if (s.footer_text && s.footer_text.startsWith("PASS:")) {
+            siteGatePassword = s.footer_text.replace("PASS:", "").trim();
           }
         }
 
         // 2. Journey
-        const { data: journey } = await supabaseClient.from('journey').select('*').order('sort_order', { ascending: true });
-        if (journey && journey.length > 0) {
-          document.getElementById('journey-list').innerHTML = journey.map(j => `
-            <div class="timeline-card">
-              <div class="phase">${j.phase}</div>
-              <div class="time">${j.timeline}</div>
-              <p style="font-size:0.8rem; color:#94a3b8;">${j.description}</p>
+        const { data: j } = await supabaseClient.from('journey').select('*').order('sort_order', { ascending: true });
+        if (j && j.length > 0) {
+          document.getElementById('journey-track-box').innerHTML = j.map(item => `
+            <div class="j-node">
+              <div class="j-dot"></div>
+              <div class="j-title">${item.phase}</div>
+              <div class="j-sub">${item.timeline}</div>
+              <div class="j-desc">${item.description}</div>
             </div>
           `).join('');
         }
 
         // 3. Projects
-        const { data: projects } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
-        if (projects && projects.length > 0) {
-          document.getElementById('projects-list').innerHTML = projects.map(p => `
-            <div class="glass-card project-card">
+        const { data: p } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
+        if (p) {
+          document.getElementById('projects-box').innerHTML = p.map(item => `
+            <div class="card-item">
+              <h4>${item.title}</h4>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin:4px 0 8px;">${item.description}</p>
               <div>
-                <h3>${p.title}</h3>
-                <p style="font-size: 0.85rem; color: #94a3b8; margin: 0.5rem 0;">${p.description}</p>
-              </div>
-              <div>
-                <span class="tag-badge">${p.tags}</span>
-                <div style="font-size:0.75rem; margin-top:6px; color:#38bdf8;">● ${p.status}</div>
+                <span class="badge">${item.tags}</span>
+                <span style="font-size:0.75rem; color:#4ade80;">● ${item.status}</span>
               </div>
             </div>
           `).join('');
         }
 
         // 4. Writings
-        const { data: writings } = await supabaseClient.from('writings').select('*').order('created_at', { ascending: false });
-        if (writings && writings.length > 0) {
-          document.getElementById('writings-list').innerHTML = writings.map(w => `
-            <div class="glass-card writing-card">
-              ${w.cover_image ? `<img src="${w.cover_image}" style="width:100%; height:140px; object-fit:cover; border-radius:8px; margin-bottom:10px;">` : ''}
-              <h3>${w.title}</h3>
-              <p style="font-size:0.85rem; color:#94a3b8; margin: 0.5rem 0;">${w.content}</p>
-              <span style="font-size: 0.75rem; color:#64748b;">${w.date_str}</span>
+        const { data: w } = await supabaseClient.from('writings').select('*').order('created_at', { ascending: false });
+        if (w) {
+          document.getElementById('writings-box').innerHTML = w.map(item => `
+            <div class="card-item">
+              ${item.cover_image ? `<img src="${item.cover_image}" style="width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:8px;">` : ''}
+              <h4>${item.title}</h4>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin:4px 0 6px;">${item.content}</p>
+              <span style="font-size:0.72rem; color:#64748b;">${item.date_str}</span>
             </div>
           `).join('');
         }
 
         // 5. Goals
-        const { data: goals } = await supabaseClient.from('goals').select('*');
-        if (goals && goals.length > 0) {
-          document.getElementById('recent-goals').innerHTML = goals.filter(g => g.category === 'recent').map(g => `<p style="padding:4px 0; color:#cbd5e1;">✓ ${g.goal_text}</p>`).join('');
-          document.getElementById('future-goals').innerHTML = goals.filter(g => g.category === 'future').map(g => `<p style="padding:4px 0; color:#cbd5e1;">🎯 ${g.goal_text}</p>`).join('');
-        }
-
-        // 6. Music
-        const { data: songs } = await supabaseClient.from('music').select('*').order('created_at', { ascending: false });
-        if (songs && songs.length > 0) {
-          const songContainer = document.getElementById('song-list');
-          songContainer.innerHTML = songs.map((s) => `
-            <div class="song-item" onclick="playTrack('${s.audio_url}', '${s.title} - ${s.artist}')">
-              <div><strong>${s.title}</strong> <span style="font-size:0.8rem; color:#94a3b8;">(${s.artist})</span></div>
-              <span>▶</span>
+        const { data: g } = await supabaseClient.from('goals').select('*');
+        if (g && g.length > 0) {
+          document.getElementById('goals-list-box').innerHTML = g.map(item => `
+            <div class="goal-entry">
+              <span style="color:var(--accent-cyan);">○</span>
+              <span>${item.goal_text}</span>
             </div>
           `).join('');
         }
-      } catch (err) {
-        console.error("Error fetching site data:", err);
+
+        // 6. Music
+        const { data: m } = await supabaseClient.from('music').select('*');
+        if (m && m.length > 0) {
+          document.getElementById('songs-list-box').innerHTML = m.map(item => `
+            <div onclick="playSong('${item.audio_url}', '${item.title} - ${item.artist}')" style="display:flex; justify-content:space-between; padding:0.6rem 1rem; background:rgba(255,255,255,0.03); border-radius:8px; cursor:pointer;">
+              <span>🎵 ${item.title} (${item.artist})</span>
+              <span style="color:var(--accent-cyan);">Play ▶</span>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.error("Load error:", e);
       }
     }
 
-    function playTrack(url, title) {
-      const audio = document.getElementById('audio-element');
-      document.getElementById('now-playing').innerText = "Now Playing: " + title;
+    function playSong(url, name) {
+      const audio = document.getElementById('main-audio');
+      document.getElementById('current-track-name').innerText = "Now Playing: " + name;
       audio.src = url;
       audio.play();
     }
 
-    window.addEventListener('DOMContentLoaded', loadPublicData);
+    window.addEventListener('DOMContentLoaded', loadData);
   </script>
 </body>
 </html>
