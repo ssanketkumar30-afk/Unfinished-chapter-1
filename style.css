@@ -2,9 +2,9 @@
 
 :root {
   --bg-deep: #030712;
-  --sidebar-bg: #070d1a;
-  --card-bg: rgba(11, 18, 33, 0.85);
-  --border-neon: rgba(56, 189, 248, 0.28);
+  --sidebar-bg: rgba(7, 13, 26, 0.92);
+  --card-bg: rgba(11, 18, 33, 0.82);
+  --border-neon: rgba(56, 189, 248, 0.35);
   --glow-cyan: #38bdf8;
   --glow-blue: #2563eb;
   --text-pure: #ffffff;
@@ -28,102 +28,127 @@ body {
 }
 
 /* =========================================
-   PREMIUM SOLO LEVELING GATE (LOCK SCREEN)
+   BACKGROUND VIDEO LOOP & TINT
+   ========================================= */
+.video-bg-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.video-bg-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.65) contrast(1.15) saturate(1.1);
+}
+
+.video-bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(3, 7, 18, 0.4) 0%, rgba(3, 7, 18, 0.85) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* =========================================
+   AESTHETIC LOCK GATE
    ========================================= */
 #visitor-gate {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(14, 23, 42, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  background: rgba(3, 7, 18, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.45s ease;
 }
 
 .gate-box {
-  background: rgba(11, 18, 33, 0.75);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow: 0 0 50px rgba(56, 189, 248, 0.15), inset 0 0 25px rgba(56, 189, 248, 0.05);
+  background: rgba(10, 16, 30, 0.8);
+  border: 1px solid var(--border-neon);
+  box-shadow: 0 0 50px rgba(56, 189, 248, 0.2), inset 0 0 25px rgba(56, 189, 248, 0.06);
   border-radius: 24px;
   padding: 3rem 2.2rem;
   max-width: 420px;
   width: 100%;
   text-align: center;
-  position: relative;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  animation: floatBox 6s ease-in-out infinite alternate;
 }
 
-.gate-rune {
-  font-size: 0.75rem;
+.gate-badge {
+  font-size: 0.72rem;
   letter-spacing: 5px;
   color: var(--glow-cyan);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  font-weight: 700;
   display: block;
+  margin-bottom: 0.5rem;
 }
 
 .gate-box input {
   width: 100%;
-  padding: 1rem 1.2rem;
+  padding: 1.05rem 1.2rem;
   margin: 1.5rem 0 1rem;
-  background: rgba(3, 7, 18, 0.8);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(3, 7, 18, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 12px;
   color: #fff;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   letter-spacing: 4px;
   outline: none;
-  transition: all 0.3s;
+  transition: 0.3s;
 }
 
 .gate-box input:focus {
   border-color: var(--glow-cyan);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.45);
 }
 
-/* SLEEK AESTHETIC GLOW BUTTON */
 .btn-gate {
   width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(37, 99, 235, 0.3) 100%);
+  padding: 1.05rem;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.35) 100%);
   border: 1px solid var(--glow-cyan);
   border-radius: 12px;
   color: #ffffff;
   font-family: 'Outfit', sans-serif;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 3px;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
   transition: all 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
 .btn-gate:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
   background: var(--glow-cyan);
   color: #030712;
-  box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.85);
 }
 
 /* =========================================
-   AESTHETIC TYPOGRAPHY & SIDEBAR
+   GLOWING TITLE & APP LAYOUT
    ========================================= */
 .brand-chapter {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: 4px;
   color: #ffffff;
-  text-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 0 25px rgba(37, 99, 235, 0.6);
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.9), 0 0 25px rgba(37, 99, 235, 0.7);
 }
 
 .app-layout {
@@ -134,7 +159,9 @@ body {
 .sidebar {
   width: 270px;
   background: var(--sidebar-bg);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -166,7 +193,7 @@ body {
 }
 
 .side-link:hover, .side-link.active {
-  background: rgba(56, 189, 248, 0.1);
+  background: rgba(56, 189, 248, 0.12);
   color: var(--glow-cyan);
   border: 1px solid var(--border-neon);
 }
@@ -184,7 +211,7 @@ body {
 }
 
 /* =========================================
-   HERO PHOTO 2 SECTION (SUNG JIN WOO)
+   HERO PHOTO 2 SECTION
    ========================================= */
 .hero-photo2 {
   min-height: 92vh;
@@ -192,24 +219,22 @@ body {
   display: flex;
   align-items: center;
   padding: 4rem 2rem;
-  background: radial-gradient(circle at 75% 30%, rgba(29, 78, 216, 0.3), transparent 60%),
-              radial-gradient(circle at 15% 85%, rgba(56, 189, 248, 0.1), transparent 50%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .hero-jinwoo-art {
   position: absolute;
   top: 0;
   right: 0;
-  width: 58%;
+  width: 55%;
   height: 100%;
   background-size: cover;
   background-position: top center;
-  opacity: 0.65;
+  opacity: 0.7;
   mask-image: linear-gradient(to left, black 35%, transparent 100%), linear-gradient(to bottom, black 70%, transparent 100%);
   -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%), linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
-  animation: floatJinwoo 6s ease-in-out infinite alternate;
+  animation: floatBox 6s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
@@ -291,7 +316,7 @@ body {
   padding: 0.85rem 2rem;
   border-radius: 99px;
   border: 1px solid var(--glow-cyan);
-  background: rgba(56, 189, 248, 0.15);
+  background: rgba(56, 189, 248, 0.16);
   color: #fff;
   font-size: 0.95rem;
   text-decoration: none;
@@ -308,7 +333,7 @@ body {
 
 section {
   padding: 4.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sec-title-cursive {
@@ -346,7 +371,7 @@ section {
   border-radius: 14px;
   padding: 1.2rem;
   text-align: center;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 .about-right-art img {
@@ -356,7 +381,7 @@ section {
   border-radius: 16px;
   border: 1px solid var(--border-neon);
   box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
-  animation: floatJinwoo 5s ease-in-out infinite alternate;
+  animation: floatBox 5s ease-in-out infinite alternate;
 }
 
 /* JOURNEY */
@@ -417,14 +442,14 @@ section {
   border-radius: 14px;
   padding: 1.3rem;
   margin-bottom: 1rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   transition: 0.3s;
 }
 
 .card-item:hover {
   border-color: var(--glow-cyan);
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2);
 }
 
 .badge {
@@ -463,14 +488,14 @@ section {
   margin-top: 2rem;
 }
 
-@keyframes floatJinwoo {
-  0% { transform: translateY(0px) scale(1); }
-  100% { transform: translateY(-8px) scale(1.02); }
+@keyframes floatBox {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-7px); }
 }
 
 @media (max-width: 900px) {
   .app-layout { flex-direction: column; }
-  .sidebar { width: 100%; position: static; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.2rem; }
+  .sidebar { width: 100%; position: static; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 1.2rem; }
   .side-nav { flex-direction: row; flex-wrap: wrap; margin: 1rem 0; gap: 0.4rem; }
   .main-wrapper { margin-left: 0; width: 100%; }
   .about-2col, .split-sections, .goals-banner { grid-template-columns: 1fr; }
