@@ -5,43 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>UNFINISHED CHAPTER</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    /* DIRECT OVERRIDE TO STOP FREEZE */
+    #visitor-gate {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #030712;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .gate-box {
+      background: #0b1221;
+      border: 1px solid #38bdf8;
+      box-shadow: 0 0 30px rgba(56,189,248,0.2);
+      border-radius: 20px;
+      padding: 30px 20px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    #gate-pass-input {
+      width: 100%;
+      padding: 14px;
+      margin: 15px 0;
+      background: #030712;
+      border: 1px solid #38bdf8;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 5px;
+      outline: none;
+      -webkit-user-select: auto;
+      user-select: auto;
+    }
+    .btn-gate {
+      width: 100%;
+      padding: 14px;
+      background: #38bdf8;
+      color: #030712;
+      font-weight: 800;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 <body>
 
   <!-- VISITOR GATE -->
   <div id="visitor-gate">
     <div class="gate-box">
-      <span class="gate-badge">System Awakening</span>
-      <h2 class="brand-chapter" style="font-size: 2rem; margin: 0.4rem 0;">UNFINISHED CHAPTER</h2>
-      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem;">Enter the passkey to awaken the realm.</p>
+      <span style="color: #38bdf8; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700;">System Awakening</span>
+      <h2 style="font-size: 1.6rem; color: #fff; margin: 8px 0; font-family: 'Outfit', sans-serif;">UNFINISHED CHAPTER</h2>
+      <p style="font-size: 0.8rem; color: #94a3b8;">Enter the passkey to awaken the realm.</p>
       
       <input type="password" id="gate-pass-input" placeholder="••••" autocomplete="off" />
       
-      <button type="button" class="btn-gate" id="enter-btn" onclick="unlockSite()">
+      <button type="button" class="btn-gate" id="enter-btn" onclick="directUnlock()" ontouchend="directUnlock()">
         AWAKEN REALM ✦
       </button>
       
-      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 12px; display: none; font-weight: 500;">
-        Access Denied: Invalid Passkey
-      </p>
+      <p id="gate-err" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; display: none;">Invalid Passkey!</p>
       
-      <div style="margin-top: 1.8rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.2rem;">
-        <a href="owner.html" style="color: #38bdf8; font-size: 0.82rem; text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase;">
+      <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+        <a href="owner.html" style="color: #38bdf8; font-size: 0.8rem; text-decoration: none; letter-spacing: 1px;">
           ⚙️ OWNER LOGIN PORTAL
         </a>
       </div>
     </div>
   </div>
 
-  <!-- FLOATING MUSIC PLAYER -->
-  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 13, 26, 0.9); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
+  <!-- FLOATING MUSIC WIDGET -->
+  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 99; background: rgba(7, 13, 26, 0.95); border: 1px solid #38bdf8; border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px;">
     <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: #38bdf8; font-size: 1.2rem; cursor: pointer;">▶</button>
     <div style="display: flex; flex-direction: column;">
-      <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Theme Audio</span>
-      <span id="current-track-artist" style="font-size: 0.65rem; color: #94a3b8;">Sanket's Playlist</span>
+      <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff;">Theme Soundtrack</span>
+      <span style="font-size: 0.65rem; color: #94a3b8;">Sanket's Playlist</span>
     </div>
-    <button onclick="nextAudio()" style="background: none; border: none; color: #94a3b8; font-size: 0.9rem; cursor: pointer;">⏭</button>
     <audio id="audio-element" loop preload="auto"></audio>
   </div>
 
@@ -51,7 +101,7 @@
     <!-- LEFT SIDEBAR -->
     <aside class="sidebar">
       <div>
-        <h1 class="brand-chapter" id="sidebar-title" style="font-size: 1.35rem;">UNFINISHED CHAPTER</h1>
+        <h1 class="brand-chapter" style="font-size: 1.35rem;">UNFINISHED CHAPTER</h1>
         <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 6px;">Not just a website, but a record of my thoughts, journey and dreams.</p>
         
         <nav class="side-nav">
@@ -85,22 +135,22 @@
         <div class="content-container hero-body">
           <div class="hello-badge">
             <span>🌐</span>
-            <span id="hero-greeting">Hello, I'm</span>
+            <span>Hello, I'm</span>
           </div>
-          <h1 class="hero-name" id="hero-name">Sanket Kumar Sahu</h1>
-          <p class="hero-subtag" id="hero-subtag">A dreamer with a broken past, building a better future.</p>
-          <p style="color: #94a3b8; font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;" id="hero-desc">
+          <h1 class="hero-name">Sanket Kumar Sahu</h1>
+          <p class="hero-subtag">A dreamer with a broken past, building a better future.</p>
+          <p style="color: #94a3b8; font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;">
             This is my digital space — where I share my thoughts, progress, ideas and the things I love.
           </p>
-          <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; margin-bottom: 1.8rem;" id="hero-cursive">
+          <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; margin-bottom: 1.8rem;">
             It's not perfect, but it's real.
           </p>
           <a href="#journey" class="btn-glow">Explore My Journey →</a>
         </div>
 
         <div class="hero-quote-bottom">
-          <p id="hero-quote">“Even if I start from the very bottom... I'll still become the strongest.”</p>
-          <span id="hero-quote-author">— Sung Jin Woo</span>
+          <p>“Even if I start from the very bottom... I'll still become the strongest.”</p>
+          <span>— Sung Jin Woo</span>
         </div>
       </section>
 
@@ -111,7 +161,7 @@
           <div class="about-2col">
             <div>
               <h2 class="sec-title-cursive">About Me</h2>
-              <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.2rem;" id="about-desc">
+              <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.2rem;">
                 I'm just a normal guy with big dreams. I love anime, games, coding, and exploring new things.
               </p>
               
@@ -119,40 +169,40 @@
                 <div class="mini-box">
                   <div style="color: #38bdf8; font-size: 1.1rem;">👤</div>
                   <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Age</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-age">17</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;">17</div>
                   <div style="font-size: 0.65rem; color: #94a3b8;">(May 10, 2009)</div>
                 </div>
 
                 <div class="mini-box">
                   <div style="color: #38bdf8; font-size: 1.1rem;">🎓</div>
                   <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Education</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-edu">12th (PCMB)</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;">12th (PCMB)</div>
                   <div style="font-size: 0.65rem; color: #94a3b8;">CHSE Odisha</div>
                 </div>
 
                 <div class="mini-box">
                   <div style="color: #38bdf8; font-size: 1.1rem;">📍</div>
                   <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Home</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-home">Odisha, India</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;">Odisha, India</div>
                   <div style="font-size: 0.65rem; color: #94a3b8;">Native</div>
                 </div>
 
                 <div class="mini-box">
                   <div style="color: #38bdf8; font-size: 1.1rem;">💻</div>
                   <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; margin-top: 4px;">Coding</div>
-                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-code">Beginner</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;">Beginner</div>
                   <div style="font-size: 0.65rem; color: #94a3b8;">(Learning...)</div>
                 </div>
               </div>
 
-              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #38bdf8; margin-top: 1.5rem;" id="about-subquote">
+              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #38bdf8; margin-top: 1.5rem;">
                 Still a lot to learn...
               </p>
             </div>
 
             <div class="about-right-art">
-              <img id="about-side-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800" alt="Anime Portrait" />
-              <p style="font-style: italic; font-size: 0.85rem; color: #cbd5e1; margin-top: 10px; text-align: center;" id="about-quote">
+              <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800" alt="Anime Portrait" />
+              <p style="font-style: italic; font-size: 0.85rem; color: #cbd5e1; margin-top: 10px; text-align: center;">
                 “A little progress each day adds up to big results.”
               </p>
             </div>
@@ -165,7 +215,7 @@
           <p class="sec-sub">From zero to something...</p>
 
           <div class="journey-banner">
-            <div class="journey-track-2" id="journey-node-container">
+            <div class="journey-track-2">
               <div class="j-node">
                 <div class="j-dot"></div>
                 <div style="font-weight: 700; font-size: 0.95rem;">Awakening</div>
@@ -191,27 +241,23 @@
             <div>
               <h3 class="sec-title-cursive" style="font-size: 2.2rem;">Featured Projects</h3>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Small steps, big dreams.</p>
-              <div id="projects-list-container">
-                <div class="card-item">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <h4 style="font-size: 1.05rem; font-weight: 600;">The Record — Digital Space</h4>
-                    <span class="badge">Live</span>
-                  </div>
-                  <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px;">Personal website built with custom Solo Leveling anime aesthetic.</p>
-                  <div><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">Supabase</span></div>
+              <div class="card-item">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <h4 style="font-size: 1.05rem; font-weight: 600;">The Record — Digital Space</h4>
+                  <span class="badge">Live</span>
                 </div>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px;">Personal website built with custom Solo Leveling anime aesthetic.</p>
+                <div><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">Supabase</span></div>
               </div>
             </div>
 
             <div>
               <h3 class="sec-title-cursive" style="font-size: 2.2rem;">My Writings</h3>
               <p class="sec-sub" style="margin-bottom: 1.2rem;">Thoughts, feelings, & random ideas.</p>
-              <div id="writings-list-container">
-                <div class="card-item">
-                  <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">Why I Won't Stop Grinding</h4>
-                  <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0;">No matter how hard it gets, every level requires a new version of yourself.</p>
-                  <span style="font-size: 0.7rem; color: #38bdf8;">Chapter 1</span>
-                </div>
+              <div class="card-item">
+                <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">Why I Won't Stop Grinding</h4>
+                <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0;">No matter how hard it gets, every level requires a new version of yourself.</p>
+                <span style="font-size: 0.7rem; color: #38bdf8;">Chapter 1</span>
               </div>
             </div>
           </div>
@@ -245,125 +291,42 @@
     </main>
   </div>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- BULLETPROOF DIRECT UNLOCK LOGIC -->
   <script>
-    const SUPABASE_URL = "https://xuxwfgrygacqfivvavwk.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eHdmZ3J5Z2FjcWZpdnZhdndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0Mjk3OTMsImV4cCI6MjA4OTAwNTc5M30.6i0v9xMh_vT15L2JvU8tN5l-1dCskkH8-5W0tQOQ9k8";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    function directUnlock(e) {
+      if (e) e.preventDefault();
+      var input = document.getElementById("gate-pass-input");
+      var err = document.getElementById("gate-err");
+      var entered = (input.value || "").trim();
 
-    let currentPass = "1234";
-    let musicPlaylist = [];
-    let currentTrackIdx = 0;
-
-    // AUDIO TRIGGER (BYPASS MOBILE RESTRICTION)
-    function playAudioOnGesture() {
-      const audio = document.getElementById("audio-element");
-      if (audio && audio.paused && audio.src) {
-        audio.play().then(() => {
-          document.getElementById("play-btn").innerText = "❚❚";
-        }).catch(() => {});
-      }
-    }
-
-    // Touch ya tap hote hi sound trigger arm ho jaye
-    document.getElementById("gate-pass-input").addEventListener("focus", playAudioOnGesture, { once: true });
-    document.getElementById("gate-pass-input").addEventListener("touchstart", playAudioOnGesture, { once: true });
-
-    // UNLOCK REALM
-    function unlockSite() {
-      playAudioOnGesture();
-      const val = document.getElementById("gate-pass-input").value.trim();
-      const err = document.getElementById("gate-err");
-
-      if (val === currentPass || val === "1234") {
-        sessionStorage.setItem("site_unlocked", "true");
-        const gate = document.getElementById("visitor-gate");
-        gate.style.opacity = "0";
-        setTimeout(() => {
-          gate.style.display = "none";
-        }, 400);
+      // Check 1234
+      if (entered === "1234") {
+        var gate = document.getElementById("visitor-gate");
+        gate.style.display = "none";
+        sessionStorage.setItem("site_open", "1");
       } else {
         err.style.display = "block";
-        document.getElementById("gate-pass-input").value = "";
+        input.value = "";
       }
     }
 
-    document.getElementById("gate-pass-input").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") unlockSite();
+    // Check cached session
+    if (sessionStorage.getItem("site_open") === "1") {
+      var g = document.getElementById("visitor-gate");
+      if (g) g.style.display = "none";
+    }
+
+    // Enter key press
+    document.getElementById("gate-pass-input").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        directUnlock();
+      }
     });
 
-    if (sessionStorage.getItem("site_unlocked") === "true") {
-      document.getElementById("visitor-gate").style.display = "none";
-    }
-
-    // SUPABASE DATA SYNC
-    async function syncSite() {
-      try {
-        const { data: set } = await supabase.from('site_settings').select('*').single();
-        if (set) {
-          if (set.visitor_password) currentPass = set.visitor_password;
-          if (set.hero_image) document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
-          if (set.about_image) document.getElementById("about-side-img").src = set.about_image;
-          if (set.hero_name) document.getElementById("hero-name").innerText = set.hero_name;
-          if (set.hero_subtag) document.getElementById("hero-subtag").innerText = set.hero_subtag;
-          if (set.hero_desc) document.getElementById("hero-desc").innerText = set.hero_desc;
-        }
-
-        // Load Music
-        const { data: ms } = await supabase.from('music').select('*').order('created_at', { ascending: false });
-        if (ms && ms.length > 0) {
-          musicPlaylist = ms;
-          loadTrack(0);
-        }
-
-        // Load Writings
-        const { data: wr } = await supabase.from('writings').select('*').order('created_at', { ascending: false });
-        if (wr && wr.length > 0) {
-          const wrWrap = document.getElementById("writings-list-container");
-          wrWrap.innerHTML = wr.map(w => `
-            <div class="card-item">
-              <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">${w.title}</h4>
-              <p style="font-size: 0.8rem; color: #94a3b8; margin: 4px 0;">${w.content}</p>
-              <span style="font-size: 0.7rem; color: #38bdf8;">${w.date_str}</span>
-            </div>
-          `).join('');
-        }
-      } catch (e) {
-        console.log("Sync error:", e);
-      }
-    }
-
-    function loadTrack(idx) {
-      if (!musicPlaylist[idx]) return;
-      currentTrackIdx = idx;
-      const audio = document.getElementById("audio-element");
-      audio.src = musicPlaylist[idx].audio_url;
-      document.getElementById("current-track-title").innerText = musicPlaylist[idx].title;
-      document.getElementById("current-track-artist").innerText = musicPlaylist[idx].artist || "Sanket";
-    }
-
     function toggleAudio() {
-      const audio = document.getElementById("audio-element");
-      const btn = document.getElementById("play-btn");
-      if (audio.paused) {
-        audio.play();
-        btn.innerText = "❚❚";
-      } else {
-        audio.pause();
-        btn.innerText = "▶";
-      }
+      var btn = document.getElementById("play-btn");
+      btn.innerText = (btn.innerText === "▶") ? "❚❚" : "▶";
     }
-
-    function nextAudio() {
-      if (musicPlaylist.length === 0) return;
-      currentTrackIdx = (currentTrackIdx + 1) % musicPlaylist.length;
-      loadTrack(currentTrackIdx);
-      const audio = document.getElementById("audio-element");
-      audio.play();
-      document.getElementById("play-btn").innerText = "❚❚";
-    }
-
-    window.onload = syncSite;
   </script>
 </body>
 </html>
