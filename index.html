@@ -3,325 +3,387 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Record | Sanket Kumar Sahu</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+  <title>UNFINISHED CHAPTER — Digital Space</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- 1. VISITOR PASSWORD GATE -->
-  <div id="visitor-gate">
-    <div class="gate-card">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
-      <h3 style="font-size: 1.4rem;">The Record is Locked</h3>
-      <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 6px;">Enter visitor access password to unlock</p>
-      <input type="password" id="gate-pass-input" placeholder="Access Password" />
-      <button class="btn-glow" onclick="unlockSite()" style="width: 100%; justify-content: center;">Enter Space →</button>
-      <p id="gate-error" style="color: #f87171; font-size: 0.8rem; margin-top: 10px;"></p>
+  <!-- 1. CINEMATIC WELCOME INTRO -->
+  <div id="welcome-intro">
+    <span class="intro-badge">System Awakening</span>
+    <h1 class="intro-title" id="intro-glow-title">UNFINISHED CHAPTER</h1>
+    <p class="intro-subtitle">"Not the end of the story, just the beginning of the grind."</p>
+    <button class="intro-btn" onclick="enterRealm()">Awaken Digital Realm ✦</button>
+  </div>
+
+  <!-- 2. VISITOR GATE (PASSWORD PROTECTION) -->
+  <div id="visitor-gate" style="display: none;">
+    <div class="gate-box">
+      <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔒</div>
+      <h3 style="font-family: 'Outfit', sans-serif; letter-spacing: 2px; color: var(--glow-cyan);">UNFINISHED CHAPTER</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">This digital space is locked. Enter the passkey to enter.</p>
+      <input type="password" id="gate-pass-input" placeholder="Enter Access Code..." />
+      <button class="btn-glow" style="width: 100%; justify-content: center;" onclick="verifyGatePass()">Unlock Realm →</button>
+      <p id="gate-err" style="color: #ef4444; font-size: 0.8rem; margin-top: 0.8rem; display: none;">Invalid passkey. Access denied.</p>
     </div>
   </div>
 
-  <!-- 2. PHOTO 2 APP LAYOUT -->
+  <!-- 3. FLOATING MUSIC PLAYER (CORNER WIDGET) -->
+  <div id="music-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 999; background: rgba(7, 10, 18, 0.85); border: 1px solid var(--border-neon); border-radius: 50px; padding: 8px 16px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(56,189,248,0.3);">
+    <button id="play-btn" onclick="toggleAudio()" style="background: none; border: none; color: var(--glow-cyan); font-size: 1.2rem; cursor: pointer;">▶</button>
+    <div style="display: flex; flex-direction: column;">
+      <span id="current-track-title" style="font-size: 0.78rem; font-weight: 600; color: #fff; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">No track loaded</span>
+      <span id="current-track-artist" style="font-size: 0.65rem; color: var(--text-muted);">Sanket's Playlist</span>
+    </div>
+    <button onclick="nextAudio()" style="background: none; border: none; color: var(--text-muted); font-size: 0.9rem; cursor: pointer;">⏭</button>
+    <audio id="audio-element"></audio>
+  </div>
+
+  <!-- 4. CORE APP LAYOUT -->
   <div class="app-layout">
     
     <!-- LEFT SIDEBAR -->
     <aside class="sidebar">
       <div>
-        <h2 class="brand-cursive">The Record</h2>
-        <p class="brand-desc">Not just a website, but a record of my thoughts, journey and dreams.</p>
+        <h1 class="brand-chapter" id="sidebar-title">UNFINISHED CHAPTER</h1>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Not just a website, but a record of my thoughts, journey and dreams.</p>
         
         <nav class="side-nav">
-          <a href="#home" class="side-link active"><span>🏠</span> Home</a>
+          <a href="#home" class="side-link active"><span>✦</span> Home</a>
           <a href="#about" class="side-link"><span>👤</span> About</a>
-          <a href="#journey" class="side-link"><span>🗺️</span> Journey</a>
+          <a href="#journey" class="side-link"><span>🛤️</span> Journey</a>
           <a href="#projects" class="side-link"><span>💻</span> Projects</a>
           <a href="#writings" class="side-link"><span>✍️</span> Writings</a>
           <a href="#goals" class="side-link"><span>🎯</span> Goals</a>
-          <a href="#music" class="side-link"><span>🎵</span> Soundtrack</a>
+          <span id="custom-nav-links"></span>
         </nav>
       </div>
 
-      <div class="side-footer">
-        <p>Same person • Different chapters • Still writing...</p>
-        <a href="owner.html" style="display:inline-block; margin-top:10px; color:var(--accent-cyan); font-size:0.75rem; text-decoration:none;">⚙ Owner Login</a>
+      <div>
+        <p style="font-size: 0.7rem; color: var(--text-muted); line-height: 1.4;">Same person.<br/>Different chapters.<br/>Still writing...</p>
+        <p style="font-family: 'Caveat', cursive; font-size: 1.4rem; color: var(--glow-cyan); margin-top: 4px;">Sanket</p>
+        <div style="display: flex; gap: 12px; margin-top: 10px; font-size: 1rem; color: var(--text-muted);">
+          <a href="#" style="color: inherit; text-decoration: none;">▶</a>
+          <a href="#" style="color: inherit; text-decoration: none;">💬</a>
+          <a href="#" style="color: inherit; text-decoration: none;">📷</a>
+          <a href="#" style="color: inherit; text-decoration: none;">🐙</a>
+        </div>
       </div>
     </aside>
 
-    <!-- MAIN SCROLLABLE CONTENT -->
+    <!-- MAIN RIGHT CONTENT WRAPPER -->
     <main class="main-wrapper">
-
+      
       <!-- HERO SECTION -->
-      <section class="hero-photo2" id="home">
-        <div class="hero-bg-anime" id="hero-anime-art"></div>
-        
-        <!-- Korean Accents -->
+      <section id="home" class="hero-photo2">
+        <div class="hero-jinwoo-art" id="hero-img-box"></div>
         <div class="korean-tag">
           <h4>성진우</h4>
           <span>Sung Jin Woo</span>
         </div>
 
-        <div class="hero-body">
-          <div class="hello-badge">🌐 Hello, I'm</div>
-          <h1 class="hero-name" id="hero-name-label">Sanket Kumar Sahu</h1>
-          <p class="hero-subtag">A dreamer with a broken past, building a better future.</p>
-          <p class="hero-para" id="hero-desc-label">
+        <div class="content-container hero-body">
+          <div class="hello-badge">
+            <span style="font-size: 0.75rem;">🌐</span>
+            <span id="hero-greeting">Hello, I'm</span>
+          </div>
+          <h1 class="hero-name" id="hero-name">Sanket Kumar Sahu</h1>
+          <p class="hero-subtag" id="hero-subtag">A dreamer with a broken past, building a better future.</p>
+          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 500px; margin-bottom: 1.5rem;" id="hero-desc">
             This is my digital space — where I share my thoughts, progress, ideas and the things I love.
           </p>
-          <p style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #93c5fd; margin-bottom: 1.5rem;">
+          <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; margin-bottom: 1.8rem;" id="hero-cursive">
             It's not perfect, but it's real.
           </p>
           <a href="#journey" class="btn-glow">Explore My Journey →</a>
         </div>
 
         <div class="hero-quote-bottom">
-          <p id="hero-quote-text">“Even if I start from the very bottom... I'll still become the strongest.”</p>
-          <span>— Sung Jin Woo</span>
+          <p id="hero-quote">“Even if I start from the very bottom... I'll still become the strongest.”</p>
+          <span id="hero-quote-author">— Sung Jin Woo</span>
         </div>
       </section>
 
       <div class="content-container">
-
-        <!-- ABOUT ME SECTION -->
+        
+        <!-- ABOUT SECTION -->
         <section id="about">
-          <h2 class="sec-title-cursive">About Me</h2>
-          
           <div class="about-2col">
             <div>
-              <p style="color: var(--text-muted); font-size: 0.95rem;" id="about-text-label">
-                I'm just a normal guy with big dreams. I love anime, coding, and exploring new things.
-                I'm not perfect, but I'm trying to be a better version of myself, day by day.
+              <h2 class="sec-title-cursive">About Me</h2>
+              <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.2rem;" id="about-desc">
+                I'm just a normal guy with big dreams. I love anime, games, coding, and exploring new things.
               </p>
-
-              <!-- 4 MINI CARDS -->
+              
               <div class="info-cards-4">
                 <div class="mini-box">
-                  <div class="icon">👤</div>
-                  <label>Age</label>
-                  <strong id="card-age">16</strong>
+                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">👤</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Age</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-age">17</div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted);" id="info-age-sub">(May 10, 2009)</div>
                 </div>
+
                 <div class="mini-box">
-                  <div class="icon">🎓</div>
-                  <label>Education</label>
-                  <strong id="card-edu">12th (PCMB)</strong>
+                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">🎓</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Education</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-edu">12th (PCMB)</div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted);" id="info-edu-sub">CHSE Odisha</div>
                 </div>
+
                 <div class="mini-box">
-                  <div class="icon">📍</div>
-                  <label>Home</label>
-                  <strong id="card-loc">Odisha, India</strong>
+                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">📍</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Home</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-home">Odisha, India</div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted);">Native</div>
                 </div>
+
                 <div class="mini-box">
-                  <div class="icon">💻</div>
-                  <label>Coding</label>
-                  <strong id="card-code">Beginner</strong>
+                  <div style="color: var(--glow-cyan); font-size: 1.1rem;">💻</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">Coding</div>
+                  <div style="font-weight: 700; font-size: 1.1rem;" id="info-code">Beginner</div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted);" id="info-code-sub">(Learning...)</div>
                 </div>
               </div>
 
-              <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #93c5fd; margin-top: 1.5rem;">
-                "Still a lot to learn..."
-              </div>
+              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--glow-cyan); margin-top: 1.5rem;" id="about-subquote">
+                Still a lot to learn...
+              </p>
             </div>
 
             <div class="about-right-art">
-              <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800" id="about-art-img" alt="Jinwoo aesthetic" />
-              <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #e2e8f0; margin-top: 0.8rem;">
-                "A little progress each day adds up to big results."
+              <img id="about-side-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800" alt="Anime Portrait" />
+              <p style="font-style: italic; font-size: 0.85rem; color: #cbd5e1; margin-top: 10px; text-align: center;" id="about-quote">
+                “A little progress each day adds up to big results.”
               </p>
             </div>
           </div>
         </section>
 
-        <!-- MY JOURNEY -->
+        <!-- JOURNEY SECTION -->
         <section id="journey">
-          <h2 class="sec-title-cursive">My Journey</h2>
-          <p class="sec-sub">From zero to something...</p>
+          <h2 class="sec-title-cursive" id="journey-title">My Journey</h2>
+          <p class="sec-sub" id="journey-desc">From zero to something...</p>
 
           <div class="journey-banner">
-            <div class="journey-track-2" id="journey-track-box">
-              <!-- Dynamically populated from Supabase -->
+            <div class="journey-track-2" id="journey-node-container">
+              <!-- Loaded from Supabase -->
             </div>
           </div>
         </section>
 
-        <!-- PROJECTS & WRITINGS -->
-        <section id="projects">
+        <!-- PROJECTS & WRITINGS SIDE-BY-SIDE -->
+        <section id="projects-and-writings">
           <div class="split-sections">
-            <!-- Projects Left -->
-            <div>
-              <h2 class="sec-title-cursive">Featured Projects</h2>
-              <p class="sec-sub">Small steps, big dreams.</p>
-              <div id="projects-box"></div>
+            
+            <!-- FEATURED PROJECTS -->
+            <div id="projects">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.8rem;">
+                <h3 class="sec-title-cursive" style="font-size: 2.2rem;">Featured Projects</h3>
+                <span style="font-size: 0.75rem; color: var(--glow-cyan);">Public</span>
+              </div>
+              <p class="sec-sub" style="margin-bottom: 1.2rem;">Small steps, big dreams.</p>
+              <div id="projects-list-container">
+                <!-- Projects from database -->
+              </div>
             </div>
 
-            <!-- Writings Right -->
+            <!-- MY WRITINGS -->
             <div id="writings">
-              <h2 class="sec-title-cursive">My Writings</h2>
-              <p class="sec-sub">Thoughts, feelings, & random ideas.</p>
-              <div id="writings-box"></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.8rem;">
+                <h3 class="sec-title-cursive" style="font-size: 2.2rem;">My Writings</h3>
+                <span style="font-size: 0.75rem; color: var(--glow-cyan);">Thoughts</span>
+              </div>
+              <p class="sec-sub" style="margin-bottom: 1.2rem;">Thoughts, feelings, & random ideas.</p>
+              <div id="writings-list-container">
+                <!-- Writings from database (only what you post!) -->
+              </div>
             </div>
+
           </div>
         </section>
 
-        <!-- GOALS HORIZONTAL BANNER -->
+        <!-- GOALS SECTION -->
         <section id="goals">
-          <h2 class="sec-title-cursive">Goals</h2>
-          <p class="sec-sub">Big dreams. Same me.</p>
+          <div style="margin-bottom: 1.2rem;">
+            <h2 class="sec-title-cursive" id="goals-title">Goals</h2>
+            <p class="sec-sub" id="goals-desc">Big dreams. Same me.</p>
+          </div>
 
           <div class="goals-banner">
-            <div id="goals-list-box">
-              <!-- Dynamically populated from Supabase -->
+            <div id="goals-list-container">
+              <!-- Goals loaded dynamically -->
             </div>
-            <div style="text-align: right;">
-              <p style="font-family: 'Caveat', cursive; font-size: 2.1rem; line-height: 1.2; color: #bae6fd;">
-                "I'm not chasing success, I'm chasing the version of myself that I'll be proud to look back at."
+            <div style="text-align: right; position: relative;">
+              <p style="font-family: 'Caveat', cursive; font-size: 1.6rem; color: #cbd5e1; line-height: 1.4;" id="goals-quote">
+                “I'm not chasing success, I'm chasing the version of myself that I'll be proud to look back at.”
               </p>
+              <div style="position: absolute; right: -10px; top: -30px; font-size: 0.85rem; writing-mode: vertical-rl; letter-spacing: 4px; color: var(--glow-cyan); opacity: 0.4;">
+                まだ終わりじゃない
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- SOUNDTRACK -->
-        <section id="music">
-          <h2 class="sec-title-cursive">Soundtrack</h2>
-          <p class="sec-sub">Background ambiance & anime vibes.</p>
-
-          <div class="music-box">
-            <h4 id="current-track-name" style="color: var(--accent-cyan);">Pick a track from below</h4>
-            <audio id="main-audio" controls></audio>
-            <div id="songs-list-box" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 8px;"></div>
-          </div>
-        </section>
+        <!-- DYNAMIC CUSTOM SECTIONS CONTAINER -->
+        <div id="custom-sections-wrapper">
+          <!-- Any new headings/titles added by you will appear here automatically! -->
+        </div>
 
         <!-- FOOTER -->
-        <footer style="text-align: center; padding: 2.5rem 0; color: var(--text-muted); font-size: 0.85rem;">
-          <p class="brand-cursive" style="font-size: 1.8rem; color: #fff;">The Record</p>
-          <p>Created with ❤️ by Sanket</p>
+        <footer style="padding: 2.5rem 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
+          <h4 class="brand-chapter" style="font-size: 1.1rem;">UNFINISHED CHAPTER</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Crafted with discipline by Sanket • All rights reserved</p>
         </footer>
 
       </div>
     </main>
   </div>
 
-  <!-- SUPABASE SCRIPTS -->
-  <script src="supabase-config.js"></script>
+  <!-- SCRIPT ENGINE (SUPABASE REAL-TIME + INTERACTIONS) -->
   <script>
-    // VISITOR PASSWORD LOGIC
-    let siteGatePassword = "1234"; // Default password
+    const SUPABASE_URL = "https://xuxwfgrygacqfivvavwk.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eHdmZ3J5Z2FjcWZpdnZhdndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0Mjk3OTMsImV4cCI6MjA4OTAwNTc5M30.6i0v9xMh_vT15L2JvU8tN5l-1dCskkH8-5W0tQOQ9k8";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    function unlockSite() {
-      const entered = document.getElementById('gate-pass-input').value;
-      if (entered === siteGatePassword) {
-        document.getElementById('visitor-gate').style.display = 'none';
-        sessionStorage.setItem('the_record_unlocked', 'true');
+    let siteSettings = null;
+    let musicPlaylist = [];
+    let currentTrackIndex = 0;
+
+    // 1. WELCOME INTRO & ACCESS GATE
+    function enterRealm() {
+      const intro = document.getElementById("welcome-intro");
+      intro.style.opacity = "0";
+      setTimeout(() => {
+        intro.style.visibility = "hidden";
+        checkAccessGate();
+      }, 800);
+    }
+
+    function checkAccessGate() {
+      const unlocked = sessionStorage.getItem("chapter_unlocked");
+      if (!unlocked) {
+        document.getElementById("visitor-gate").style.display = "flex";
+      }
+    }
+
+    function verifyGatePass() {
+      const input = document.getElementById("gate-pass-input").value;
+      const pass = siteSettings && siteSettings.visitor_password ? siteSettings.visitor_password : "1234";
+      if (input === pass) {
+        sessionStorage.setItem("chapter_unlocked", "true");
+        document.getElementById("visitor-gate").style.display = "none";
       } else {
-        document.getElementById('gate-error').innerText = "Incorrect Password. Please try again.";
+        document.getElementById("gate-err").style.display = "block";
       }
     }
 
-    if (sessionStorage.getItem('the_record_unlocked') === 'true') {
-      document.getElementById('visitor-gate').style.display = 'none';
+    // 2. TOUCH & MOUSE SPARK TRAIL
+    function createSpark(x, y) {
+      const spark = document.createElement("div");
+      spark.className = "mana-spark";
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 700);
     }
 
-    async function loadData() {
-      try {
-        // 1. Settings & Custom Visitor Password
-        const { data: s } = await supabaseClient.from('site_settings').select('*').single();
-        if (s) {
-          if (s.name) document.getElementById('hero-name-label').innerText = s.name;
-          if (s.hero_desc) document.getElementById('hero-desc-label').innerText = s.hero_desc;
-          if (s.quote) document.getElementById('hero-quote-text').innerText = `“${s.quote}”`;
-          if (s.about_text) document.getElementById('about-text-label').innerText = s.about_text;
-          if (s.age) document.getElementById('card-age').innerText = s.age;
-          if (s.education) document.getElementById('card-edu').innerText = s.education;
-          if (s.location) document.getElementById('card-loc').innerText = s.location;
-          if (s.coding_status) document.getElementById('card-code').innerText = s.coding_status;
-          if (s.hero_image) {
-            document.getElementById('hero-anime-art').style.backgroundImage = `url('${s.hero_image}')`;
-          }
-          // Read custom visitor password if saved
-          if (s.footer_text && s.footer_text.startsWith("PASS:")) {
-            siteGatePassword = s.footer_text.replace("PASS:", "").trim();
-          }
-        }
+    window.addEventListener("pointerdown", (e) => createSpark(e.clientX, e.clientY));
+    window.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) createSpark(e.touches[0].clientX, e.touches[0].clientY);
+    });
 
-        // 2. Journey
-        const { data: j } = await supabaseClient.from('journey').select('*').order('sort_order', { ascending: true });
-        if (j && j.length > 0) {
-          document.getElementById('journey-track-box').innerHTML = j.map(item => `
-            <div class="j-node">
-              <div class="j-dot"></div>
-              <div class="j-title">${item.phase}</div>
-              <div class="j-sub">${item.timeline}</div>
-              <div class="j-desc">${item.description}</div>
-            </div>
-          `).join('');
-        }
+    // 3. FETCH SITE CONTENT & REALTIME SYNC
+    async function initSite() {
+      // Settings
+      const { data: set } = await supabase.from('site_settings').select('*').single();
+      if (set) {
+        siteSettings = set;
+        document.getElementById("intro-glow-title").innerText = set.site_title || "UNFINISHED CHAPTER";
+        document.getElementById("sidebar-title").innerText = set.site_title || "UNFINISHED CHAPTER";
+        document.getElementById("hero-greeting").innerText = set.hero_greeting;
+        document.getElementById("hero-name").innerText = set.hero_name;
+        document.getElementById("hero-subtag").innerText = set.hero_subtag;
+        document.getElementById("hero-desc").innerText = set.hero_desc;
+        document.getElementById("hero-cursive").innerText = set.hero_cursive;
+        document.getElementById("hero-quote").innerText = set.hero_quote;
+        document.getElementById("hero-quote-author").innerText = set.hero_quote_author;
+        document.getElementById("about-desc").innerText = set.about_desc;
+        document.getElementById("about-quote").innerText = set.about_quote;
+        document.getElementById("about-subquote").innerText = set.about_subquote;
+        document.getElementById("info-age").innerText = set.age_val;
+        document.getElementById("info-age-sub").innerText = set.age_sub;
+        document.getElementById("info-edu").innerText = set.edu_val;
+        document.getElementById("info-edu-sub").innerText = set.edu_sub;
+        document.getElementById("info-home").innerText = set.home_val;
+        document.getElementById("info-code").innerText = set.code_val;
+        document.getElementById("info-code-sub").innerText = set.code_sub;
+        document.getElementById("journey-title").innerText = set.journey_title;
+        document.getElementById("journey-desc").innerText = set.journey_desc;
+        document.getElementById("goals-title").innerText = set.goals_title;
+        document.getElementById("goals-desc").innerText = set.goals_desc;
+        document.getElementById("goals-quote").innerText = set.goals_quote;
 
-        // 3. Projects
-        const { data: p } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
-        if (p) {
-          document.getElementById('projects-box').innerHTML = p.map(item => `
-            <div class="card-item">
-              <h4>${item.title}</h4>
-              <p style="font-size:0.82rem; color:var(--text-muted); margin:4px 0 8px;">${item.description}</p>
-              <div>
-                <span class="badge">${item.tags}</span>
-                <span style="font-size:0.75rem; color:#4ade80;">● ${item.status}</span>
-              </div>
-            </div>
-          `).join('');
+        if (set.hero_image) {
+          document.getElementById("hero-img-box").style.backgroundImage = `url('${set.hero_image}')`;
         }
-
-        // 4. Writings
-        const { data: w } = await supabaseClient.from('writings').select('*').order('created_at', { ascending: false });
-        if (w) {
-          document.getElementById('writings-box').innerHTML = w.map(item => `
-            <div class="card-item">
-              ${item.cover_image ? `<img src="${item.cover_image}" style="width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:8px;">` : ''}
-              <h4>${item.title}</h4>
-              <p style="font-size:0.82rem; color:var(--text-muted); margin:4px 0 6px;">${item.content}</p>
-              <span style="font-size:0.72rem; color:#64748b;">${item.date_str}</span>
-            </div>
-          `).join('');
+        if (set.about_image) {
+          document.getElementById("about-side-img").src = set.about_image;
         }
-
-        // 5. Goals
-        const { data: g } = await supabaseClient.from('goals').select('*');
-        if (g && g.length > 0) {
-          document.getElementById('goals-list-box').innerHTML = g.map(item => `
-            <div class="goal-entry">
-              <span style="color:var(--accent-cyan);">○</span>
-              <span>${item.goal_text}</span>
-            </div>
-          `).join('');
-        }
-
-        // 6. Music
-        const { data: m } = await supabaseClient.from('music').select('*');
-        if (m && m.length > 0) {
-          document.getElementById('songs-list-box').innerHTML = m.map(item => `
-            <div onclick="playSong('${item.audio_url}', '${item.title} - ${item.artist}')" style="display:flex; justify-content:space-between; padding:0.6rem 1rem; background:rgba(255,255,255,0.03); border-radius:8px; cursor:pointer;">
-              <span>🎵 ${item.title} (${item.artist})</span>
-              <span style="color:var(--accent-cyan);">Play ▶</span>
-            </div>
-          `).join('');
-        }
-      } catch (e) {
-        console.error("Load error:", e);
       }
-    }
 
-    function playSong(url, name) {
-      const audio = document.getElementById('main-audio');
-      document.getElementById('current-track-name').innerText = "Now Playing: " + name;
-      audio.src = url;
-      audio.play();
-    }
+      // Journey Nodes
+      const { data: jn } = await supabase.from('journey').select('*').order('sort_order', { ascending: true });
+      if (jn && jn.length > 0) {
+        const wrap = document.getElementById("journey-node-container");
+        wrap.innerHTML = jn.map(j => `
+          <div class="j-node">
+            <div class="j-dot"></div>
+            <div style="font-weight: 700; font-size: 0.95rem;">${j.phase}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${j.timeline}</div>
+            ${j.description ? `<div style="font-size: 0.7rem; color: var(--glow-cyan); margin-top: 2px;">${j.description}</div>` : ''}
+          </div>
+        `).join('');
+      }
 
-    window.addEventListener('DOMContentLoaded', loadData);
-  </script>
-</body>
-</html>
+      // Projects
+      const { data: pj } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+      if (pj) {
+        const wrap = document.getElementById("projects-list-container");
+        wrap.innerHTML = pj.map(p => `
+          <div class="card-item">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <h4 style="font-size: 1.05rem; font-weight: 600;">${p.title}</h4>
+              <span class="badge">${p.status || 'Active'}</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">${p.description}</p>
+            <div>${p.tags.split(',').map(t => `<span class="badge" style="background: rgba(255,255,255,0.06); color: #cbd5e1;">${t.trim()}</span>`).join('')}</div>
+          </div>
+        `).join('');
+      }
+
+      // Writings (Only what owner writes!)
+      const { data: wr } = await supabase.from('writings').select('*').order('created_at', { ascending: false });
+      const wrWrap = document.getElementById("writings-list-container");
+      if (wr && wr.length > 0) {
+        wrWrap.innerHTML = wr.map(w => `
+          <div class="card-item" style="display: flex; gap: 14px; align-items: center;">
+            ${w.cover_image ? `<img src="${w.cover_image}" style="width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-neon);" />` : ''}
+            <div>
+              <h4 style="font-size: 1rem; font-weight: 600; color: #fff;">${w.title}</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0;">${w.content}</p>
+              <span style="font-size: 0.7rem; color: var(--glow-cyan);">${w.date_str}</span>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        wrWrap.innerHTML = `<div class="card-item" style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">No writings published yet. Fresh ink soon...</div>`;
+      }
+
+      // Goals
+      const { data: gl } = await supabase.from('goals').select('*').order('sort_order', { ascending: true });
+      if (gl) {
+        const wrap = document.getElementById("goals-list-container");
+        wrap.innerHTML = gl.map(g => `
+          <div class="goal-entry">
+            <span style="color: ${g.comple
