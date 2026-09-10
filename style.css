@@ -26,83 +26,11 @@ body {
   line-height: 1.6;
 }
 
-/* 1. CINEMATIC WELCOME INTRO OVERLAY */
-#welcome-intro {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #0b152d 0%, #020306 100%);
-  z-index: 1000000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  pointer-events: auto;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-#welcome-intro.fade-out {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(1.04);
-}
-
-.intro-badge {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 5px;
-  color: var(--glow-cyan);
-  text-transform: uppercase;
-  margin-bottom: 0.8rem;
-  animation: pulseGlow 2s infinite;
-}
-
-.intro-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(2rem, 6vw, 3.8rem);
-  font-weight: 900;
-  letter-spacing: 5px;
-  color: #fff;
-  text-shadow: 0 0 15px var(--glow-cyan), 0 0 35px var(--glow-blue);
-  margin-bottom: 0.5rem;
-}
-
-.intro-subtitle {
-  font-family: 'Caveat', cursive;
-  font-size: 1.6rem;
-  color: #cbd5e1;
-}
-
-.intro-btn {
-  position: relative;
-  z-index: 1000001;
-  margin-top: 2rem;
-  padding: 0.85rem 2.4rem;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.88rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border-radius: 99px;
-  border: 1px solid var(--glow-cyan);
-  background: rgba(56, 189, 248, 0.18);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-  transition: 0.3s;
-  pointer-events: auto;
-}
-
-.intro-btn:hover {
-  background: var(--glow-cyan);
-  color: #000;
-  box-shadow: 0 0 35px rgba(56, 189, 248, 0.85);
-}
-
-/* 2. VISITOR GATE (PASSWORD PROTECTION) */
+/* VISITOR GATE (PASSWORD PROTECTION) */
 #visitor-gate {
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 10, 0.95);
+  background: rgba(4, 6, 10, 0.96);
   backdrop-filter: blur(16px);
   z-index: 999999;
   display: flex;
@@ -131,11 +59,11 @@ body {
   border-radius: 10px;
   color: #fff;
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.05rem;
   letter-spacing: 2px;
 }
 
-/* 3. CORE APP LAYOUT (SIDEBAR + MAIN) */
+/* CORE APP LAYOUT (SIDEBAR + MAIN) */
 .app-layout {
   display: flex;
   min-height: 100vh;
@@ -203,7 +131,7 @@ body {
   padding: 0 2rem;
 }
 
-/* 4. HERO SECTION WITH JINWOO BREATHING MOTION */
+/* HERO SECTION WITH JINWOO BREATHING MOTION */
 .hero-photo2 {
   min-height: 92vh;
   position: relative;
@@ -302,7 +230,7 @@ body {
   margin-top: 4px;
 }
 
-/* 5. BUTTONS & CARDS */
+/* BUTTONS & CARDS */
 .btn-glow {
   display: inline-flex;
   align-items: center;
@@ -478,34 +406,8 @@ section {
   margin-bottom: 0.7rem;
 }
 
-/* 6. DYNAMIC CUSTOM SECTIONS */
 .custom-section-block {
   margin-top: 2rem;
-}
-
-/* TOUCH & CURSOR PARTICLE */
-.mana-spark {
-  position: fixed;
-  pointer-events: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--glow-cyan);
-  box-shadow: 0 0 10px var(--glow-cyan), 0 0 20px var(--glow-blue);
-  transform: translate(-50%, -50%);
-  animation: sparkFade 0.7s linear forwards;
-  z-index: 9999999;
-}
-
-/* KEYFRAME ANIMATIONS */
-@keyframes sparkFade {
-  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.8); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; text-shadow: 0 0 15px var(--glow-cyan); }
 }
 
 @keyframes glowBreath {
@@ -518,7 +420,6 @@ section {
   100% { transform: translateY(-8px) scale(1.02); }
 }
 
-/* MOBILE RESPONSIVENESS */
 @media (max-width: 900px) {
   .app-layout { flex-direction: column; }
   .sidebar { width: 100%; position: static; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.2rem; }
